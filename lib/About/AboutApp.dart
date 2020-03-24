@@ -40,7 +40,7 @@ class StateAboutApp extends State<AboutApp> {
                   padding: EdgeInsets.all(20),
                   alignment: Alignment.center,
                   child: new Text(
-                    "تطبيق يساعد الذين يريدون مساعدة الناس والعوائل المحتاجة بالتعرف على ارقام هواتفهم وعناوينهم وايضا موقعهم على الخريطة",
+                    "تطبيق يساعد الذين يريدون مساعدة الناس والعوائل المحتاجة بالتعرف على ارقا م هواتفهم وعناوينهم وايضا موقعهم على الخريطة",
                     textDirection: TextDirection.rtl,
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,

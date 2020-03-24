@@ -22,7 +22,9 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
   TextEditingController _addressControlar;
   TextEditingController _cityControlar;
   TextEditingController _muhafadaControlar;
-  TextEditingController  _alhay;
+
+    TextEditingController _alhay;
+
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
     _cityControlar = new TextEditingController(text: widget.ahelkher.city);
     _muhafadaControlar = new TextEditingController(text: widget.ahelkher.muhafada);
     _alhay = new TextEditingController(text: widget.ahelkher.muhafada);
+
 
 
   }
@@ -110,6 +113,7 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
                     fillColor: Colors.deepPurple,
                     labelStyle: TextStyle(color: Colors.deepPurple)),
               ),
+               new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
                 controller: _cityControlar,
                 decoration: InputDecoration(
@@ -121,6 +125,7 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
                     fillColor: Colors.deepPurple,
                     labelStyle: TextStyle(color: Colors.deepPurple)),
               ),
+
               new Padding(padding: EdgeInsets.only(top: 30)),
               FloatingActionButton(
                 onPressed: () {
@@ -135,6 +140,7 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
 
                     'muhafada': _muhafadaControlar.text,
                     'city': _cityControlar.text,
+                                        'alhay': _alhay.text,
 
                   }).then((_) {
                     Navigator.pop(context);

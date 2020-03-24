@@ -60,7 +60,7 @@ class StateHomePageWithoutlogin extends State<HomePageWithoutlogin>{
         title: new Column(
           children: <Widget>[
 
-            new Text('معين',style: TextStyle(fontSize: 21),),
+            new Text('مُعين',style: TextStyle(fontSize: 21),),
             _selectedIndex==0? new Text('الاشخاص المعينين', style: TextStyle(fontSize: 10, color: Colors.white,)):
             _selectedIndex==1? new Text('العوائل المحتاجة', style: TextStyle(fontSize: 10, color: Colors.white,)):
             _selectedIndex==2? new Text('الاعدادات', style: TextStyle(fontSize: 10, color: Colors.white,)):

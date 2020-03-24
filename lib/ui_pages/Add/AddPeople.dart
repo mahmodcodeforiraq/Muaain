@@ -87,8 +87,6 @@ class StateAddAddPeople extends State<AddPeople>{
               controller: _alhay,
               decoration: InputDecoration(labelText: 'الحي'),
             ),
-
-
             new TextField(
               controller: _phonenumber,
               decoration: InputDecoration(labelText: 'رقم هاتف'),
@@ -173,9 +171,6 @@ class StateAddAddPeople extends State<AddPeople>{
         'muhafada': _mohafada.text,
         'city': _city.text,
         'alhay': _alhay.text,
-
-
-
       }).then((_) {
         Navigator.of(context).pushReplacementNamed('/HomePage');
       });
