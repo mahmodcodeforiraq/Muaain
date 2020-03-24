@@ -33,6 +33,7 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
     _phonenumberControlar = new TextEditingController(text: widget.ahelkher.phonenumber);
     _addressControlar = new TextEditingController(text: widget.ahelkher.address);
     _cityControlar = new TextEditingController(text: widget.ahelkher.city);
+        _muhafadaControlar = new TextEditingController(text: widget.ahelkher.city);
     _alhay = new TextEditingController(text: widget.ahelkher.muhafada);
 
   }
