@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "724938429504",
+    "firebase_url": "https://ahelalkher-9a003.firebaseio.com",
+    "project_id": "ahelalkher-9a003",
+    "storage_bucket": "ahelalkher-9a003.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724938429504:android:ecada0c5163df9b5aebba5",
+        "android_client_info": {
+          "package_name": "ahelalkher.codeforiraq.org.ail_alkher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724938429504-a7488il510eh9omf9ar7m5hs9nbi29ph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArglnLTPQZnlIBVbPP5zlJVcuS68z3Sic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724938429504-a7488il510eh9omf9ar7m5hs9nbi29ph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
