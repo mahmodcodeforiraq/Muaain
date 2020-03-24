@@ -32,15 +32,15 @@ class StateAboutApp extends State<AboutApp> {
                 ),
                 new Padding(padding: EdgeInsets.only(top: 20)),
                 new Text(
-                  'دليل اطباء صلاح الدين',
-                  style: TextStyle(fontSize: 18),
+                  'مُعين',
+                  style: TextStyle(fontSize: 21),
                 ),
                 new Padding(padding: EdgeInsets.only(top: 20)),
                 new Container(
                   padding: EdgeInsets.all(20),
                   alignment: Alignment.center,
                   child: new Text(
-                    "تطبيق يتيح للمستخدم الاستدلال و معرفة عناوين الاطباء في المحافظات و يمكن اضافة الاطباء عن طريق المستخدم العادي",
+                    "تطبيق يساعد الذين يريدون مساعدة الناس والعوائل المحتاجة بالتعرف على ارقا م هواتفهم وعناوينهم وايضا موقعهم على الخريطة",
                     textDirection: TextDirection.rtl,
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
