@@ -22,17 +22,17 @@ class StateAboutApp extends State<AboutApp> {
             new Column(
               children: <Widget>[
                 new Container(
+
                   child: new Image.asset(
-                    'img/codeforiraq.png',
-                    width: 300,
-                    height: 300,
+                    'img/codeforiraq.png',scale: 5,
+
                   ),
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(left: 60),
                 ),
                 new Padding(padding: EdgeInsets.only(top: 20)),
                 new Text(
-                  'دليل اطباء صلاح الدين',
+                  'مُعين',
                   style: TextStyle(fontSize: 18),
                 ),
                 new Padding(padding: EdgeInsets.only(top: 20)),
@@ -40,7 +40,7 @@ class StateAboutApp extends State<AboutApp> {
                   padding: EdgeInsets.all(20),
                   alignment: Alignment.center,
                   child: new Text(
-                    "تطبيق يتيح للمستخدم الاستدلال و معرفة عناوين الاطباء في المحافظات و يمكن اضافة الاطباء عن طريق المستخدم العادي",
+                    "تطبيق يساعد الذين يريدون مساعدة الناس والعوائل المحتاجة بالتعرف على ارقام هواتفهم وعناوينهم وايضا موقعهم على الخريطة",
                     textDirection: TextDirection.rtl,
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,

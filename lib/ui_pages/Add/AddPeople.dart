@@ -36,6 +36,8 @@ class StateAddAddPeople extends State<AddPeople>{
   TextEditingController _mohafada= new TextEditingController();
   TextEditingController _city= new TextEditingController();
   TextEditingController _phonenumber= new TextEditingController();
+  TextEditingController _alhay=new TextEditingController();
+
 
 
 
@@ -80,6 +82,12 @@ class StateAddAddPeople extends State<AddPeople>{
               controller: _city,
               decoration: InputDecoration(labelText: 'قضاء'),
             ),
+
+            new TextField(
+              controller: _alhay,
+              decoration: InputDecoration(labelText: 'الحي'),
+            ),
+
 
             new TextField(
               controller: _phonenumber,
@@ -164,6 +172,9 @@ class StateAddAddPeople extends State<AddPeople>{
         'locationlongitude': locationlongitude,
         'muhafada': _mohafada.text,
         'city': _city.text,
+        'alhay': _alhay.text,
+
+
 
       }).then((_) {
         Navigator.of(context).pushReplacementNamed('/HomePage');

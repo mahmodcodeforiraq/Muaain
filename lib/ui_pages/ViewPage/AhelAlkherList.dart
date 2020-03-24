@@ -89,7 +89,7 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
         child:  new FloatingActionButton(
 
           onPressed: () => _createNewAhelAlkher(context),
-          backgroundColor: Colors.blue,
+          backgroundColor:Color(0xffff006064),
           child: Center(
             child: new Icon(Icons.person_add),
           ),
@@ -195,7 +195,7 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
 
                                                     height: 40,
                                                     child: new Card(
-                                                      color: Color(0xff38BAC8),
+                                                      color: Color(0xffff006064),
                                                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20),
                                                           side:BorderSide(width: 2,color: Colors.white)),
 

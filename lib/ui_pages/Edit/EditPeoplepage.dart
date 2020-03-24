@@ -22,6 +22,8 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
   TextEditingController _addressControlar;
   TextEditingController _cityControlar;
   TextEditingController _muhafadaControlar;
+  TextEditingController  _alhay;
+
 
   @override
   void initState() {
@@ -32,7 +34,7 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
     _phonenumberControlar = new TextEditingController(text: widget.people.phonenumber);
     _addressControlar = new TextEditingController(text: widget.people.address);
     _cityControlar = new TextEditingController(text: widget.people.city);
-    _muhafadaControlar = new TextEditingController(text: widget.people.muhafada);
+    _alhay = new TextEditingController(text: widget.people.muhafada);
 
   }
 
@@ -108,6 +110,17 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
                     fillColor: Colors.deepPurple,
                     labelStyle: TextStyle(color: Colors.deepPurple)),
               ),
+              new TextField(
+                controller: _cityControlar,
+                decoration: InputDecoration(
+                    labelText: "الحي",
+                    icon: new Icon(
+                      Icons.location_on,
+                      color: Colors.deepPurple,
+                    ),
+                    fillColor: Colors.deepPurple,
+                    labelStyle: TextStyle(color: Colors.deepPurple)),
+              ),
               new Padding(padding: EdgeInsets.only(top: 30)),
               FloatingActionButton(
                 onPressed: () {
@@ -120,6 +133,8 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
                     'locationaltitude': widget.people.locationaltitude,
                     'locationlongitude': widget.people.locationlongitude,
                     'muhafada': _muhafadaControlar.text,
+                    'alhay': _alhay.text,
+
                     'city': _cityControlar.text,
 
                   }).then((_) {

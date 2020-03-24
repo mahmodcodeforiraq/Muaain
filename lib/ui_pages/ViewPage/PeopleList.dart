@@ -190,7 +190,7 @@ class StatePeopleList extends State<PeopleList>{
                                                     width: 100,
                                                     height: 40,
                                                     child: new Card(
-                                                      color: Color(0xff38BAC8),
+                                                      color: Color(0xffff006064),
                                                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20),
                                                           side:BorderSide(width: 2,color: Colors.white)),
 

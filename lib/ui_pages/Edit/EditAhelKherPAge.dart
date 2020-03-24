@@ -22,6 +22,7 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
   TextEditingController _addressControlar;
   TextEditingController _cityControlar;
   TextEditingController _muhafadaControlar;
+  TextEditingController  _alhay;
 
   @override
   void initState() {
@@ -32,6 +33,8 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
     _addressControlar = new TextEditingController(text: widget.ahelkher.address);
     _cityControlar = new TextEditingController(text: widget.ahelkher.city);
     _muhafadaControlar = new TextEditingController(text: widget.ahelkher.muhafada);
+    _alhay = new TextEditingController(text: widget.ahelkher.muhafada);
+
 
   }
 
@@ -107,6 +110,17 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
                     fillColor: Colors.deepPurple,
                     labelStyle: TextStyle(color: Colors.deepPurple)),
               ),
+              new TextField(
+                controller: _cityControlar,
+                decoration: InputDecoration(
+                    labelText: "الحي",
+                    icon: new Icon(
+                      Icons.location_on,
+                      color: Colors.deepPurple,
+                    ),
+                    fillColor: Colors.deepPurple,
+                    labelStyle: TextStyle(color: Colors.deepPurple)),
+              ),
               new Padding(padding: EdgeInsets.only(top: 30)),
               FloatingActionButton(
                 onPressed: () {
@@ -117,6 +131,7 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
                     'phoneNumber': _phonenumberControlar.text,
                     'locationaltitude': widget.ahelkher.locationaltitude,
                     'locationlongitude': widget.ahelkher.locationlongitude,
+                    'alhay': _alhay.text,
 
                     'muhafada': _muhafadaControlar.text,
                     'city': _cityControlar.text,

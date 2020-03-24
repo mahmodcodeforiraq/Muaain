@@ -32,6 +32,7 @@ class StateAddAhelAlkher extends State<AddAhelAlkher>{
   TextEditingController _mohafada= new TextEditingController();
   TextEditingController _city= new TextEditingController();
   TextEditingController _phonenumber= new TextEditingController();
+  TextEditingController _alhay=new TextEditingController();
 
 @override
   void initState() {
@@ -79,6 +80,11 @@ class StateAddAhelAlkher extends State<AddAhelAlkher>{
               controller: _city,
               decoration: InputDecoration(labelText: 'قضاء'),
             ),
+            new TextField(
+              controller: _alhay,
+              decoration: InputDecoration(labelText: 'الحي'),
+            ),
+
 
             new TextField(
               controller: _phonenumber,
@@ -164,6 +170,8 @@ class StateAddAhelAlkher extends State<AddAhelAlkher>{
         'locationlongitude': locationlongitude,
         'muhafada': _mohafada.text,
         'city': _city.text,
+        'alhay': _alhay.text,
+
 
       }).then((_) {
         Navigator.of(context).pushReplacementNamed('/HomePage');

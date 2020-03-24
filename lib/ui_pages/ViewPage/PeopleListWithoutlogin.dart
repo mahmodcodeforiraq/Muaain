@@ -171,36 +171,6 @@ new Container(
                                         textDirection:
                                         TextDirection.rtl,
                                       ),
-                                      new Container(
-                                        height: 40,
-                                        child: new Card(
-                                          color: Color(0xff38BAC8),
-                                          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20),
-                                              side:BorderSide(width: 2,color: Colors.white)),
-
-                                          child: new FlatButton(
-                                              child:
-                                              new Row(
-                                                children: <Widget>[
-                                                  new Icon(
-                                                    Icons.edit,
-                                                    color: Color(
-                                                        0xff6A4BC3),
-                                                    size: 15,
-                                                  ),
-                                                  new Text("تعديل",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 14),)
-                                                ],
-
-                                              ),
-                                              onPressed: () =>
-                                                  _navigateToEditPeople(
-                                                      context,
-                                                      items[position])),
-                                        ),
-                                        margin: EdgeInsets.only(
-                                            right: 150),
-
-                                      )
                                     ],
                                   ),
                                 ),
