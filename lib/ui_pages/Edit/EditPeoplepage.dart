@@ -22,6 +22,8 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
   TextEditingController _addressControlar;
   TextEditingController _cityControlar;
   TextEditingController _muhafadaControlar;
+      TextEditingController _alhay;
+
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
     _addressControlar = new TextEditingController(text: widget.people.address);
     _cityControlar = new TextEditingController(text: widget.people.city);
     _muhafadaControlar = new TextEditingController(text: widget.people.muhafada);
+        _alhay = new TextEditingController(text: widget.people.muhafada);
 
   }
 
@@ -108,6 +111,19 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
                     fillColor: Colors.deepPurple,
                     labelStyle: TextStyle(color: Colors.deepPurple)),
               ),
+              
+               new Padding(padding: EdgeInsets.only(top: 10)),
+              new TextField(
+                controller: _cityControlar,
+                decoration: InputDecoration(
+                    labelText: "الحي",
+                    icon: new Icon(
+                      Icons.location_on,
+                      color: Colors.deepPurple,
+                    ),
+                    fillColor: Colors.deepPurple,
+                    labelStyle: TextStyle(color: Colors.deepPurple)),
+              ),
               new Padding(padding: EdgeInsets.only(top: 30)),
               FloatingActionButton(
                 onPressed: () {
@@ -121,6 +137,7 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
                     'locationlongitude': widget.people.locationlongitude,
                     'muhafada': _muhafadaControlar.text,
                     'city': _cityControlar.text,
+                    'alhay': _alhay.text,
 
                   }).then((_) {
                     Navigator.pop(context);
