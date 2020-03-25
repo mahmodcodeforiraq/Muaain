@@ -131,7 +131,7 @@ new Container(
                     '${items[position].nameOfFather}',
                     style: TextStyle(
                         fontSize: 20,
-                        color: Color(0xff4dd0e1),
+                        color: Colors.black,
                         fontWeight: FontWeight.w600),
                     textDirection: TextDirection.rtl,
                   ),
@@ -152,7 +152,7 @@ new Container(
                                         'العنوان : ${items[position]
                                             .address}',
                                         style:
-                                        TextStyle(fontSize: 13,color:Color(0xff1DE9B6),),
+                                        TextStyle(fontSize: 13,color:Colors.black45,),
                                         textDirection:
                                         TextDirection.rtl,
                                       ),
@@ -160,14 +160,14 @@ new Container(
                                         'رقم هاتف  : ${items[position]
                                             .phonenumber}',
                                         style:
-                                        TextStyle(fontSize: 13,color:Color(0xff1DE9B6),),
+                                        TextStyle(fontSize: 13,color:Colors.black45,),
                                         textDirection:
                                         TextDirection.rtl,
                                       ),
                                       new Text(
                                         "المحافظة ${items[position].muhafada}  | القضاء  ${items[position].city} | الحي ${items[position].alhay}",
                                         style:
-                                        TextStyle(fontSize: 13,color:Color(0xff1DE9B6),),
+                                        TextStyle(fontSize: 13,color:Colors.black45,),
                                         textDirection:
                                         TextDirection.rtl,
                                       ),
@@ -341,7 +341,7 @@ class DropDownWidget extends State {
           icon: Icon(Icons.arrow_drop_down),
           iconSize: 24,
           elevation: 16,
-          style: TextStyle(color: Color(0xff4dd0e1), fontSize: 18),
+          style: TextStyle(color: Colors.black45, fontSize: 18),
           underline: Container(
             height: 2,
             color: Colors.deepPurpleAccent,

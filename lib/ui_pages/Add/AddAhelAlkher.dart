@@ -101,14 +101,17 @@ class StateAddAhelAlkher extends State<AddAhelAlkher>{
               getMyLocation();
             },
               elevation: 5,
-              color: Colors.blue,
+              color: Color(0xffff006064),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(10)
+              ),
               child: new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Text('موقعي على الخريطة',style: new TextStyle(fontSize: 18,color: Colors.white),),
-                  new Padding(padding: EdgeInsets.only(left: 10)),
+                  new Padding(padding: EdgeInsets.only(left: 30)),
 
-                  new Icon(Icons.location_on)
+                  new Icon(Icons.location_on,color: Colors.white,)
                 ],
               ),
             ),
@@ -141,14 +144,17 @@ class StateAddAhelAlkher extends State<AddAhelAlkher>{
 
             new RaisedButton(onPressed:insertData,
               elevation: 5,
-              color: Colors.green,
+              color: Color(0xffff006064),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(10)
+              ),
               child: new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Text('حفظ البيانات',style: new TextStyle(fontSize: 18,color: Colors.white),),
-                  new Padding(padding: EdgeInsets.only(left: 10)),
+                  new Padding(padding: EdgeInsets.only(left: 15)),
 
-                  new Icon(Icons.save)
+                  new Icon(Icons.save,color: Colors.white,)
                 ],
               ),
             )
