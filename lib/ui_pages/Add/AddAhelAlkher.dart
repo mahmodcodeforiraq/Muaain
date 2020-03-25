@@ -49,8 +49,11 @@ class StateAddAhelAlkher extends State<AddAhelAlkher>{
     // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('اضافة معين',style: TextStyle(fontSize: 24),),
+        title: new Text("اضافة مُعين"),
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: Color(0xffff006064),
+        actions: <Widget>[],
       ),
 
       body:new Container(
@@ -162,7 +165,7 @@ class StateAddAhelAlkher extends State<AddAhelAlkher>{
 
     setState(() {
 
-      MuaainRefrance.push().set({
+      MuaainRefrance.child(id).set({
         'id': id,
         'name': _name.text,
         'addres': _address.text,

@@ -14,7 +14,7 @@ class EditAhelKherPage extends StatefulWidget {
 }
 
 final ahelkherRefrence =
-    FirebaseDatabase.instance.reference().child('Users').child('Muaain');
+    FirebaseDatabase.instance.reference();
 
 class StateEditAhelKherPage extends State<EditAhelKherPage> {
   TextEditingController _nameController;
@@ -22,7 +22,6 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
   TextEditingController _addressControlar;
   TextEditingController _cityControlar;
   TextEditingController _muhafadaControlar;
-
     TextEditingController _alhay;
 
 
@@ -35,7 +34,7 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
     _addressControlar = new TextEditingController(text: widget.ahelkher.address);
     _cityControlar = new TextEditingController(text: widget.ahelkher.city);
     _muhafadaControlar = new TextEditingController(text: widget.ahelkher.muhafada);
-    _alhay = new TextEditingController(text: widget.ahelkher.muhafada);
+    _alhay = new TextEditingController(text: widget.ahelkher.alhay);
 
 
 
@@ -45,12 +44,11 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.only(bottomRight: Radius.circular(35))
-          ),
-          title: new Text("تعديل معلومات المعين"),
+          title: new Text("تعديل معلومات المُعين"),
           centerTitle: true,
-          backgroundColor: Color(0xff6A4BC3),
+          elevation: 0,
+          backgroundColor: Color(0xffff006064),
+          actions: <Widget>[],
         ),
         body: new Container(
           padding: EdgeInsets.all(40),
@@ -60,22 +58,22 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
               new TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                    labelText: "عدد االاطفال",
+                    labelText: "الاسم",
                     icon: new Icon(
                       Icons.assignment,
-                      color: Color(0xff6A4BC3),
+                      color: Color(0xffff006064),
                     ),
-                    fillColor: Color(0xff6A4BC3),
-                    labelStyle: TextStyle(color: Color(0xff6A4BC3))),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
                 controller: _addressControlar,
                 decoration: InputDecoration(
                   labelText: "العنوان",
-                  icon: new Icon(Icons.location_city, color: Color(0xff6A4BC3)),
-                  fillColor: Color(0xff6A4BC3),
-                  labelStyle: TextStyle(color: Color(0xff6A4BC3)),
+                  icon: new Icon(Icons.location_city, color: Color(0xffff006064)),
+                  fillColor: Color(0xffff006064),
+                  labelStyle: TextStyle(color: Color(0xffff006064)),
                 ),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
@@ -85,10 +83,10 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
                     labelText: "رقم هاتف ",
                     icon: new Icon(
                       Icons.phone,
-                      color: Color(0xff6A4BC3),
+                      color: Color(0xffff006064),
                     ),
-                    fillColor: Color(0xff6A4BC3),
-                    labelStyle: TextStyle(color: Color(0xff6A4BC3))),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
@@ -96,9 +94,9 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
                 decoration: InputDecoration(
                   labelText: "المحافظة",
                   icon: new Icon(Icons.confirmation_number,
-                      color: Color(0xff6A4BC3)),
-                  fillColor: Color(0xff6A4BC3),
-                  labelStyle: TextStyle(color: Color(0xff6A4BC3)),
+                      color: Color(0xffff006064)),
+                  fillColor: Color(0xffff006064),
+                  labelStyle: TextStyle(color: Color(0xffff006064)),
                 ),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
@@ -108,50 +106,56 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
                     labelText: "المدينة",
                     icon: new Icon(
                       Icons.location_on,
-                      color: Colors.deepPurple,
+                      color: Color(0xffff006064),
                     ),
-                    fillColor: Colors.deepPurple,
-                    labelStyle: TextStyle(color: Colors.deepPurple)),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
                new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
-                controller: _cityControlar,
+                controller: _alhay,
                 decoration: InputDecoration(
                     labelText: "الحي",
                     icon: new Icon(
                       Icons.location_on,
-                      color: Colors.deepPurple,
+                      color: Color(0xffff006064),
                     ),
-                    fillColor: Colors.deepPurple,
-                    labelStyle: TextStyle(color: Colors.deepPurple)),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
 
               new Padding(padding: EdgeInsets.only(top: 30)),
-              FloatingActionButton(
+              new RaisedButton(
+
+
                 onPressed: () {
-                  ahelkherRefrence.child(widget.ahelkher.id).set({
+                   ahelkherRefrence.child('Users').child('Muaain').child(widget.ahelkher.id).set({
                     'id': widget.ahelkher.id,
                     'name': _nameController.text,
                     'addres': _addressControlar.text,
                     'phoneNumber': _phonenumberControlar.text,
                     'locationaltitude': widget.ahelkher.locationaltitude,
                     'locationlongitude': widget.ahelkher.locationlongitude,
-                    'alhay': _alhay.text,
-
                     'muhafada': _muhafadaControlar.text,
                     'city': _cityControlar.text,
-                                        'alhay': _alhay.text,
+                    'alhay': _alhay.text,
+
 
                   }).then((_) {
                     Navigator.pop(context);
                   });
+                print(widget.ahelkher.id);
                 },
-                child: new Icon(Icons.forward),
-                backgroundColor: Color(0xff6A4BC3),
+                child: new Text('تعديل البيانات',style: TextStyle(fontSize: 20,color: Colors.white),),
+                color: Color(0xffff006064),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(10),
+                ),
               ),
               new Padding(padding: EdgeInsets.only(top: 50)),
             ],
           ),
         ));
   }
+
 }

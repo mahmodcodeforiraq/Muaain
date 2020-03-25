@@ -15,23 +15,25 @@ class StateAboutTeam extends State<AboutTeam> {
         appBar: new AppBar(
           title: new Text("فريق العمل"),
           centerTitle: true,
+          elevation: 0,
           backgroundColor: Color(0xffff006064),
           actions: <Widget>[],
         ),
         body: new ListView(
           children: <Widget>[
+            new Container(
+              height: 200,
+              color:Color(0xffff006064),
+
+              child: new Image.asset(
+                'img/logo.png',height: 150,width: 150,
+
+              ),
+              alignment: Alignment.center,
+            ),
+
             new Column(
               children: <Widget>[
-                new Container(
-                  padding: EdgeInsets.all(30),
-                  child: new Image.asset(
-                    'img/codeforiraq.png',
-                    width: 150,
-                    height: 150,
-                  ),
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(left: 40),
-                ),
                 new Padding(padding: EdgeInsets.only(top: 20)),
                 new Text(
                   'البرمجة من اجل العراق',

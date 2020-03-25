@@ -46,8 +46,11 @@ class StateAddAddPeople extends State<AddPeople>{
     // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('اضافة عائلة',style: TextStyle(fontSize: 24),),
+        title: new Text("اضافة عائلة"),
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: Color(0xffff006064),
+        actions: <Widget>[],
       ),
 
       body:new Container(
@@ -55,7 +58,6 @@ class StateAddAddPeople extends State<AddPeople>{
         child: new ListView(
           children: <Widget>[
 
-            new Padding(padding: EdgeInsets.only(top: 40)),
 
             new TextField(
               controller: _nameOffather,
@@ -91,41 +93,26 @@ class StateAddAddPeople extends State<AddPeople>{
               controller: _phonenumber,
               decoration: InputDecoration(labelText: 'رقم هاتف'),
             ),
-            new Padding(padding: EdgeInsets.only(top: 40)),
-            
-            new RaisedButton(onPressed: (){},
-              elevation: 5,
-              color: Colors.blue,
-              child: new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Text('موقعي على الخريطة',style: new TextStyle(fontSize: 18,color: Colors.white),),
-                  new Padding(padding: EdgeInsets.only(left: 10)),
-
-                  new Icon(Icons.location_on)
-                ],
-              ),
-            ),
-
-            new Padding(padding: EdgeInsets.only(top: 40)),
+            new Padding(padding: EdgeInsets.only(top: 10)),
 
             new RaisedButton(onPressed: (){
 
               getMyLocation();
             },
-              elevation: 5,
-              color: Colors.blue,
               child: new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Text('موقعي على الخريطة',style: new TextStyle(fontSize: 18,color: Colors.white),),
-                  new Padding(padding: EdgeInsets.only(left: 10)),
+                  new Padding(padding: EdgeInsets.only(left: 30)),
 
-                  new Icon(Icons.location_on)
+                  new Icon(Icons.location_on,color: Colors.white,)
                 ],
               ),
+              color: Color(0xffff006064),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(10)
+              ),
             ),
-
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -147,6 +134,28 @@ class StateAddAddPeople extends State<AddPeople>{
 
               ],
             ),
+            new Padding(padding: EdgeInsets.only(top: 20)),
+
+            new RaisedButton(onPressed: (){
+
+              insertData();
+            },
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Text('حفظ البيانات',style: new TextStyle(fontSize: 18,color: Colors.white),),
+                  new Padding(padding: EdgeInsets.only(left: 15)),
+
+                  new Icon(Icons.save,color: Colors.white,)
+                ],
+              ),
+              color: Color(0xffff006064),
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(10)
+              ),
+            ),
+
+
 
           ],
         ),
@@ -160,9 +169,9 @@ class StateAddAddPeople extends State<AddPeople>{
 
     setState(() {
 
-      peopleRefrance.push().set({
+      peopleRefrance.child(id).set({
         'id': id,
-        'family': _nameOffather.text,
+        'nameOfFather': _nameOffather.text,
         'number_of_chiledren': _numberOfChiledren.text,
         'addres': _address.text,
         'phoneNumber': _phonenumber.text,

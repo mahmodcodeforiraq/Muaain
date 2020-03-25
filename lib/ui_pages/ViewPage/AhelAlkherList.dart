@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:ail_alkher/Model/AhelAlkher.dart';
 import 'package:ail_alkher/ui_pages/Add/AddAhelAlkher.dart';
 import 'package:ail_alkher/ui_pages/Edit/EditAhelKherPAge.dart';
@@ -19,6 +18,7 @@ final ahelAlkherRefrance = FirebaseDatabase.instance.reference().child('Users').
 String dropdownValue ;
 
 class AhelAlkherlist extends StatefulWidget{
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -57,12 +57,12 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
       fireQuery = ahelAlkherRefrance;
 
       dropdownValue='اختر المحافظة';
-      _onDoctorAddedSubscription = fireQuery.onChildAdded.listen(_onDoctortAdded);
-      _onDoctorChangedSubscription = fireQuery.onChildChanged.listen(_onDoctortUpdated);
 
 
     });
 
+    _onDoctorAddedSubscription = ahelAlkherRefrance.onChildAdded.listen(_onDoctortAdded);
+    _onDoctorChangedSubscription = ahelAlkherRefrance.onChildChanged.listen(_onDoctortUpdated);
 
   }
 
@@ -219,8 +219,7 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
                                                           ),
                                                           onPressed: () =>
                                                               _navigateToAhelAlkher(
-                                                                  context,
-                                                                  items[position])),
+                                                                  context, items[position])),
                                                     ),
                                                     margin: EdgeInsets.only(
                                                         right: 150),

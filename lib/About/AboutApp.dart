@@ -12,6 +12,7 @@ class StateAboutApp extends State<AboutApp> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
+          elevation: 0,
           title: new Text("عن التطبيق"),
           centerTitle: true,
           backgroundColor: Color(0xffff006064),
@@ -21,14 +22,16 @@ class StateAboutApp extends State<AboutApp> {
           children: <Widget>[
             new Column(
               children: <Widget>[
+
                 new Container(
+                  height: 200,
+                  color:Color(0xffff006064),
 
                   child: new Image.asset(
-                    'img/codeforiraq.png',scale: 5,
+                    'img/logo.png',height: 150,width: 150,
 
                   ),
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(left: 60),
                 ),
                 new Padding(padding: EdgeInsets.only(top: 20)),
                 new Text(

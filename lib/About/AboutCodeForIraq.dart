@@ -16,6 +16,7 @@ class StateAboutCodeForIraq extends State<AboutCodeForIraq> {
           title: new Text("عن المبادرة"),
           centerTitle: true,
           backgroundColor: Color(0xffff006064),
+          elevation: 0,
           actions: <Widget>[],
         ),
         body: new ListView(
@@ -29,7 +30,10 @@ class StateAboutCodeForIraq extends State<AboutCodeForIraq> {
                     height: 150,
                   ),
                   alignment: Alignment.center,
-//
+
+                  color: Color(0xffff006064),
+                  height: 200,
+
                 ),
                 new Padding(padding: EdgeInsets.only(top: 20)),
                 new Text(

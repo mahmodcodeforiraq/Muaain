@@ -34,7 +34,7 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
     _addressControlar = new TextEditingController(text: widget.people.address);
     _cityControlar = new TextEditingController(text: widget.people.city);
     _muhafadaControlar = new TextEditingController(text: widget.people.muhafada);
-        _alhay = new TextEditingController(text: widget.people.muhafada);
+        _alhay = new TextEditingController(text: widget.people.alhay);
 
   }
 
@@ -42,12 +42,11 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.only(bottomRight: Radius.circular(35))
-          ),
-          title: new Text("دليل اطباء صلاح الدين"),
+          title: new Text("تعديل معلومات العائلة"),
           centerTitle: true,
-          backgroundColor: Color(0xff6A4BC3),
+          elevation: 0,
+          backgroundColor: Color(0xffff006064),
+          actions: <Widget>[],
         ),
         body: new Container(
           padding: EdgeInsets.all(40),
@@ -55,24 +54,36 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
             children: <Widget>[
               new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
+                controller: _nameOfFatherControlar,
+                decoration: InputDecoration(
+                    labelText: "اسم رب العائلة",
+                    icon: new Icon(
+                      Icons.assignment,
+                      color: Color(0xffff006064),
+                    ),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
+              ),
+              new Padding(padding: EdgeInsets.only(top: 10)),
+              new TextField(
                 controller: _numberOfchiledrenControlar,
                 decoration: InputDecoration(
                     labelText: "عدد االاطفال",
                     icon: new Icon(
                       Icons.assignment,
-                      color: Color(0xff6A4BC3),
+                      color: Color(0xffff006064),
                     ),
-                    fillColor: Color(0xff6A4BC3),
-                    labelStyle: TextStyle(color: Color(0xff6A4BC3))),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
                 controller: _addressControlar,
                 decoration: InputDecoration(
                   labelText: "العنوان",
-                  icon: new Icon(Icons.location_city, color: Color(0xff6A4BC3)),
-                  fillColor: Color(0xff6A4BC3),
-                  labelStyle: TextStyle(color: Color(0xff6A4BC3)),
+                  icon: new Icon(Icons.location_city, color: Color(0xffff006064)),
+                  fillColor: Color(0xffff006064),
+                  labelStyle: TextStyle(color: Color(0xffff006064)),
                 ),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
@@ -82,10 +93,10 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
                     labelText: "رقم هاتف ",
                     icon: new Icon(
                       Icons.phone,
-                      color: Color(0xff6A4BC3),
+                      color: Color(0xffff006064),
                     ),
-                    fillColor: Color(0xff6A4BC3),
-                    labelStyle: TextStyle(color: Color(0xff6A4BC3))),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
@@ -93,9 +104,9 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
                 decoration: InputDecoration(
                   labelText: "المحافظة",
                   icon: new Icon(Icons.confirmation_number,
-                      color: Color(0xff6A4BC3)),
-                  fillColor: Color(0xff6A4BC3),
-                  labelStyle: TextStyle(color: Color(0xff6A4BC3)),
+                      color: Color(0xffff006064)),
+                  fillColor: Color(0xffff006064),
+                  labelStyle: TextStyle(color: Color(0xffff006064)),
                 ),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
@@ -105,38 +116,36 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
                     labelText: "المدينة",
                     icon: new Icon(
                       Icons.location_on,
-                      color: Colors.deepPurple,
+                      color: Color(0xffff006064),
                     ),
-                    fillColor: Colors.deepPurple,
-                    labelStyle: TextStyle(color: Colors.deepPurple)),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
               
                new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
-                controller: _cityControlar,
+                controller: _alhay,
                 decoration: InputDecoration(
                     labelText: "الحي",
                     icon: new Icon(
                       Icons.location_on,
-                      color: Colors.deepPurple,
+                      color: Color(0xffff006064),
                     ),
-                    fillColor: Colors.deepPurple,
-                    labelStyle: TextStyle(color: Colors.deepPurple)),
+                    fillColor: Color(0xffff006064),
+                    labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
               new Padding(padding: EdgeInsets.only(top: 30)),
-              FloatingActionButton(
+              new RaisedButton(
                 onPressed: () {
                   peopleRefrence.child(widget.people.id).set({
                     'id': widget.people.id,
-                    'family': _nameOfFatherControlar.text,
+                    'nameOfFather': _nameOfFatherControlar.text,
                     'number_of_chiledren': _numberOfchiledrenControlar.text,
                     'addres': _addressControlar.text,
                     'phoneNumber': _phonenumberControlar.text,
                     'locationaltitude': widget.people.locationaltitude,
                     'locationlongitude': widget.people.locationlongitude,
                     'muhafada': _muhafadaControlar.text,
-                    'alhay': _alhay.text,
-
                     'city': _cityControlar.text,
                     'alhay': _alhay.text,
 
@@ -144,8 +153,11 @@ class StateEditPeoplePage extends State<EditPeoplePage> {
                     Navigator.pop(context);
                   });
                 },
-                child: new Icon(Icons.forward),
-                backgroundColor: Color(0xff6A4BC3),
+                child: new Text('تعديل البيانات',style: TextStyle(fontSize: 20,color: Colors.white),),
+                color: Color(0xffff006064),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(10),
+                ),
               ),
               new Padding(padding: EdgeInsets.only(top: 50)),
             ],
