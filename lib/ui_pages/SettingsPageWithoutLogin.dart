@@ -1,4 +1,3 @@
-import 'package:ail_alkher/ui_pages/Add/AddPeople.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:ail_alkher/Model/AhelAlkher.dart';
-import 'package:ail_alkher/ui_pages/Add/AddAhelAlkher.dart';
 import 'package:ail_alkher/ui_pages/Edit/EditAhelKherPAge.dart';
 import 'package:ail_alkher/ui_pages/InfoielkherPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,6 +16,10 @@ final ahelAlkherRefrance = FirebaseDatabase.instance.reference().child('Users').
 
 
 String dropdownValue ;
+String userid;
+
+FirebaseAuth myAuth = FirebaseAuth.instance;
+
 
 class AhelAlkherlist extends StatefulWidget{
 
@@ -28,6 +32,7 @@ class AhelAlkherlist extends StatefulWidget{
 }
 
 class StateAhelAlkherlist extends State<AhelAlkherlist>{
+
 
 
 
@@ -51,22 +56,27 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
     items2 = new List();
     items = new List();
 
-
+    getUID();
     setState(() {
       items = items2;
       fireQuery = ahelAlkherRefrance;
 
-      dropdownValue='اختر المحافظة';
-
-
+      dropdownValue = 'اختر المحافظة';
     });
 
-    _onDoctorAddedSubscription = ahelAlkherRefrance.onChildAdded.listen(_onDoctortAdded);
-    _onDoctorChangedSubscription = ahelAlkherRefrance.onChildChanged.listen(_onDoctortUpdated);
+    _onDoctorAddedSubscription =
+        ahelAlkherRefrance.onChildAdded.listen(_onDoctortAdded);
+    _onDoctorChangedSubscription =
+        ahelAlkherRefrance.onChildChanged.listen(_onDoctortUpdated);
+
 
   }
 
-
+  getUID() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    userid=user.uid;
+    print(userid);
+  }
 
 
   @override
@@ -83,20 +93,6 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
 
-      floatingActionButton: new Container(
-        padding: EdgeInsets.only(left: 40),
-        alignment: Alignment.bottomLeft,
-        child:  new FloatingActionButton(
-
-          onPressed: () => _createNewAhelAlkher(context),
-          backgroundColor:Color(0xffff006064),
-          child: Center(
-            child: new Icon(Icons.person_add),
-          ),
-
-
-        ),
-      ),
 
       body: new Stack(
         children: <Widget>[
@@ -190,7 +186,8 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
                                                     textDirection:
                                                     TextDirection.rtl,
                                                   ),
-                                                  new Container(
+
+                                                  userid==items2[position].id? new Container(
                                                     width: 100,
 
                                                     height: 40,
@@ -223,7 +220,9 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
                                                     margin: EdgeInsets.only(
                                                         right: 150),
 
-                                                  )
+                                                  ):
+                                                      new Text(' ')
+
                                                 ],
                                               ),
                                             ),
@@ -288,25 +287,6 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
     );
   }
 
-  void _createNewAhelAlkher(BuildContext context) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              AddAhelAlkher(AhelAlkher(null,
-                  '',
-                  '',
-                  '',
-                  '',
-                  '',
-                  '',
-                  '',
-                  '')
-              )
-      ),
-    );
-
-  }
 
 
 
@@ -358,6 +338,8 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
       });
     });
   }
+
+
 
 
 }

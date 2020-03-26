@@ -1,7 +1,13 @@
+import 'package:ail_alkher/ui_pages/Add/AddMuaain.dart';
+import 'package:ail_alkher/ui_pages/Add/AddPeopleNeeded.dart';
+import 'package:ail_alkher/ui_pages/SettingsPageWithoutLogin.dart';
+import 'package:ail_alkher/ui_pages/ViewPage/PeopleList.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class  RegisterPage extends StatefulWidget{
+import 'ViewPage/AhelAlkherList.dart';
+
+class RegisterPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -10,11 +16,35 @@ class  RegisterPage extends StatefulWidget{
 
 }
 
+
 FirebaseAuth myAuth = FirebaseAuth.instance;
+
 class StateRegisterPage extends State<RegisterPage>{
 
-  TextEditingController _email = new TextEditingController();
-  TextEditingController _password = new TextEditingController();
+  int _selectedIndex = 0;
+
+  final List<Widget> _widgetOptions = <Widget>[
+
+    new AddMuaain(),//0
+
+    new AddPeopleNeeded(),//1
+
+
+
+
+  ];
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
 
 
   @override
@@ -24,98 +54,64 @@ class StateRegisterPage extends State<RegisterPage>{
       appBar: new AppBar(
         elevation: 0,
         backgroundColor: new Color(0xffff006064),
+        title: new Column(
+          children: <Widget>[
+            _selectedIndex==0? new Text('مُعين', style: TextStyle(fontSize: 20, color: Colors.white,)):
+            _selectedIndex==1? new Text('العوائل المحتاجة', style: TextStyle(fontSize: 20, color: Colors.white,)):
+
+            new Text(' ')
+          ],
+        ),
+        centerTitle: true,
       ),
 
-      body: new ListView(
-          children: <Widget>[
+      bottomNavigationBar:  new BottomNavigationBar(
+          showUnselectedLabels: false,
 
-            new Container(
-              alignment: Alignment.center,
-              height: 200,
-              color: new Color(0xffff006064),
-              child: new Text('انشاء حساب جديد',style: new TextStyle(fontSize: 30,color: Colors.white),),
+          selectedItemColor: Colors.white,
+          backgroundColor: new Color(0xffff006064),
+          unselectedItemColor: Colors.black45,
+          selectedLabelStyle:new TextStyle(color:  Color(0xffEEE8A9)) ,
+          elevation: 10,
+          onTap: _onItemTapped,
+          currentIndex: _selectedIndex,
+          iconSize: 30,
+
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon:  Icon(Icons.person,),
+              title:  Text('الاشخاص المعينين',),
             ),
 
-            new Container(
-              child:new Container(
-                padding: EdgeInsets.all(50),
-                child: new Column(
-                  children: <Widget>[
-                    new TextField(
-                      controller: _email,
-                      decoration: InputDecoration(labelText: 'البريد الالكتروني'),
-                    ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.blue,
 
-                    new TextField(
-                      controller: _password,
-                      decoration: InputDecoration(labelText: 'كلمة المرور'),
-                    ),
-
-                    new Padding(padding: EdgeInsets.only(top: 40)),
-
-
-                    new Padding(padding: EdgeInsets.only(top: 40)),
-
-                    new RaisedButton(onPressed: (){
-
-                      myAuth
-                          .createUserWithEmailAndPassword(
-                          email: _email.text,
-                          password: _password.text)
-                          .then((_) {
-                        Navigator.pushReplacementNamed(context, '/HomePage');
-                      });
-
-                    },
-                      elevation: 5,
-                      color: new Color(0xffff006064),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:new BorderRadius.circular(10)),
-
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-
-                          new Text('انشاء حساب',style: new TextStyle(fontSize: 25,color: Colors.white),),
-
-                        ],
-                      ),
-                    ),
-
-                  ],
-                ),
-              )
-
-            ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-
-                new FlatButton(onPressed: (){
-                  Navigator.of(context).pushNamed('/Login');
-                },
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Text('سجل دخول',style: TextStyle(fontSize: 20,color: Color(0xffff006064),fontWeight: FontWeight.bold),),
-                        new Padding(padding: EdgeInsets.only(left: 10)),
-                      ],
-                    )
-                ),
-
-                new Text(' تمتلك حساب؟',
-                    textDirection:TextDirection.ltr ,
-                    style: new TextStyle(fontSize: 18,color: Colors.black ,)
-                ),
-
-
-              ],
+              icon: Icon(Icons.people,),
+              title: Text('العوائل المحتاجة'),
             ),
 
 
           ]
+
+
+      ),
+
+
+      body:  new Container(
+        child: new Stack(
+          children: <Widget>[
+            new Container(
+              child:
+              _widgetOptions.elementAt(_selectedIndex),
+            ),
+
+
+
+          ],
         ),
 
+      ),
     );
   }
 

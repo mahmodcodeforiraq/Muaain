@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:ail_alkher/Model/People.dart';
-import 'package:ail_alkher/ui_pages/Add/AddPeople.dart';
 import 'package:ail_alkher/ui_pages/Edit/EditPeoplepage.dart';
 import 'package:ail_alkher/ui_pages/InfoPeoplePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,6 +17,7 @@ final peopleRefrance = FirebaseDatabase.instance.reference().child('Users').chil
 
 String dropdownValue ;
 
+String userid;
 class PeopleList extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -49,7 +50,7 @@ class StatePeopleList extends State<PeopleList>{
     items2 = new List();
     items = new List();
 
-
+    getUID();
     setState(() {
       items = items2;
       fireQuery = peopleRefrance;
@@ -62,6 +63,12 @@ class StatePeopleList extends State<PeopleList>{
     });
 
 
+  }
+
+  getUID() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    userid=user.uid;
+    print(userid);
   }
 
   @override
@@ -77,20 +84,6 @@ class StatePeopleList extends State<PeopleList>{
     // TODO: implement build
     return new Scaffold(
 
-      floatingActionButton: new Container(
-        padding: EdgeInsets.only(left: 40),
-        alignment: Alignment.bottomLeft,
-        child:  new FloatingActionButton(
-
-          onPressed: () => _createNewPeople(context),
-          backgroundColor: Color(0xffff006064),
-          child: Center(
-            child: new Icon(Icons.add),
-          ),
-
-
-        ),
-      ),
 
       body: new Stack(
         children: <Widget>[
@@ -186,8 +179,10 @@ class StatePeopleList extends State<PeopleList>{
                                                     textDirection:
                                                     TextDirection.rtl,
                                                   ),
-                                                  new Container(
+
+                                                  userid==items2[position].id? new Container(
                                                     width: 100,
+
                                                     height: 40,
                                                     child: new Card(
                                                       color: Color(0xffff006064),
@@ -203,19 +198,24 @@ class StatePeopleList extends State<PeopleList>{
                                                                 color: Colors.black45,
                                                                 size: 15,
                                                               ),
-                                                              new Text("تعديل",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 14),)
+                                                              new Text("تعديل",
+                                                                style: TextStyle(color: Colors.white,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: 14),
+                                                              )
                                                             ],
 
                                                           ),
                                                           onPressed: () =>
                                                               _navigateToEditPeople(
-                                                                  context,
-                                                                  items[position])),
+                                                                  context, items[position])),
                                                     ),
                                                     margin: EdgeInsets.only(
                                                         right: 150),
 
-                                                  )
+                                                  ):
+                                                  new Text(' ')
+
                                                 ],
                                               ),
                                             ),
@@ -279,26 +279,26 @@ class StatePeopleList extends State<PeopleList>{
     );
   }
 
-  void _createNewPeople(BuildContext context) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              AddPeople(People(null,
-                  '',
-                  '',
-                  '',
-                  '',
-                  '',
-                  '',
-                  '',
-                  '',
-                  '')
-              )
-      ),
-    );
-
-  }
+//  void _createNewPeople(BuildContext context) async {
+//    await Navigator.push(
+//      context,
+//      MaterialPageRoute(
+//          builder: (context) =>
+//              AddPeople(People(null,
+//                  '',
+//                  '',
+//                  '',
+//                  '',
+//                  '',
+//                  '',
+//                  '',
+//                  '',
+//                  '')
+//              )
+//      ),
+//    );
+//
+//  }
 
 
 

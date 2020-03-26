@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:ail_alkher/Model/People.dart';
-import 'package:ail_alkher/ui_pages/Add/AddPeople.dart';
 import 'package:ail_alkher/ui_pages/Edit/EditPeoplepage.dart';
 import 'package:ail_alkher/ui_pages/InfoPeoplePage.dart';
 import 'package:firebase_database/firebase_database.dart';
