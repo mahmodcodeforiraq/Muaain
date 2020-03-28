@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
 
 class  LoginPage extends StatefulWidget{
   @override
@@ -16,6 +18,7 @@ class StateLoginPage extends State<LoginPage>{
 
   TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
+ProgressDialog pr;
 
 
   @override
@@ -52,6 +55,7 @@ class StateLoginPage extends State<LoginPage>{
                         new TextField(
                           controller: _password,
                           decoration: InputDecoration(labelText: 'كلمة المرور'),
+                          obscureText: true,
                         ),
 
                         new Padding(padding: EdgeInsets.only(top: 40)),
@@ -60,8 +64,16 @@ class StateLoginPage extends State<LoginPage>{
                         new Padding(padding: EdgeInsets.only(top: 40)),
 
                         new RaisedButton(onPressed: (){
+                           pr = new ProgressDialog(context,type: ProgressDialogType.Normal);
+                                pr.update(progressWidget: new Text('الرجاء الانتظار'));
+                                pr.show();
+
                           myAuth.signInWithEmailAndPassword(email: _email.text,
                               password: _password.text).then((_){
+                                
+                               pr.hide();
+
+
                             Navigator.of(context).pushReplacementNamed('/HomePage');
                           });
                         },
@@ -118,6 +130,11 @@ class StateLoginPage extends State<LoginPage>{
           ]
       ),
     );
+  }
+
+
+  progress(){
+
   }
 
 }

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+
 
 class  SettingsPageWithoutLogin extends StatefulWidget{
   @override
@@ -103,7 +105,7 @@ class StateSettingsPageWithoutLogin extends State<SettingsPageWithoutLogin>{
                 )),
 
             new FlatButton(onPressed: (){
-              Navigator.pop(context);
+              exit(0);
             },
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.end,

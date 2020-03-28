@@ -102,6 +102,8 @@ class StateInfoPeoplePage extends State<InfoPeoplePage>{
                               new Text('الاسم : ${widget.people.nameOfFather}',textDirection: TextDirection.ltr,style: TextStyle(fontSize: 18),),
                               new Text('رقم هاتف الحجز : ${widget.people.phonenumber}',textDirection: TextDirection.ltr,style: TextStyle(fontSize: 18),),
 
+                              new Text('عدد الاطفال : ${widget.people.number_of_chiledren}',textDirection: TextDirection.ltr,style: TextStyle(fontSize: 18),),
+
                               new Text('العنوان : ${widget.people.address}',textDirection: TextDirection.rtl,style: TextStyle(fontSize: 18),),
                               new Text('المحافظة : ${widget.people.muhafada}',textDirection: TextDirection.ltr,style: TextStyle(fontSize: 18),),
                               new Text('المدينة : ${widget.people.city}',textDirection: TextDirection.ltr,style: TextStyle(fontSize: 18),),

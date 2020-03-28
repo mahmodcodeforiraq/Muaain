@@ -221,7 +221,44 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
                                                         right: 150),
 
                                                   ):
-                                                      new Text(' ')
+                                                      new Text(' '),
+
+
+
+                                                  //   userid==items2[position].id? new Container(
+                                                  //   width: 100,
+
+                                                  //   height: 40,
+                                                  //   child: new Card(
+                                                  //     color: Color(0xffff006064),
+                                                  //     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20),
+                                                  //         side:BorderSide(width: 2,color: Colors.white)),
+
+                                                  //     child: new FlatButton(
+                                                  //         child:
+                                                  //         new Row(
+                                                  //           children: <Widget>[
+                                                  //             new Icon(
+                                                  //               Icons.delete,
+                                                  //               color: Colors.black45,
+                                                  //               size: 15,
+                                                  //             ),
+                                                  //             new Text("حذف",
+                                                  //               style: TextStyle(color: Colors.white,
+                                                  //                   fontWeight: FontWeight.bold,
+                                                  //                   fontSize: 14),
+                                                  //             )
+                                                  //           ],
+
+                                                  //         ),
+                                                  //         onPressed: () =>
+                                                  //             _deleteUser(context,items[position],position)
+                                                  //   ),
+                                                  //   margin: EdgeInsets.only(
+                                                  //       right: 150),
+
+                                                  // )):
+                                                  //     new Text(' ')
 
                                                 ],
                                               ),
@@ -286,6 +323,12 @@ class StateAhelAlkherlist extends State<AhelAlkherlist>{
       MaterialPageRoute(builder: (context) => InfoAhelkherPage(ahelAlkher)),
     );
   }
+  //  void _deleteUser(BuildContext context,AhelAlkher ahelAlkher,int position) async {
+  //   await ahelAlkherRefrance.child(ahelAlkher.id).remove().then((_){
+
+  //       items.removeAt(position);
+  //   });
+  // }
 
 
 

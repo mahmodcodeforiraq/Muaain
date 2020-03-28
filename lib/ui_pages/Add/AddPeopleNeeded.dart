@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
 
 
 String dropdownValue ;
@@ -28,13 +30,15 @@ class StateAddPeopleNeeded extends State<AddPeopleNeeded>{
   String  locationaltitude;
   String locationlongitude;
 
+ProgressDialog pr;
 
-  TextEditingController _name= new TextEditingController();
+  TextEditingController _nameOfFather= new TextEditingController();
   TextEditingController _address= new TextEditingController();
   TextEditingController _mohafada= new TextEditingController();
   TextEditingController _city= new TextEditingController();
   TextEditingController _phonenumber= new TextEditingController();
   TextEditingController _alhay=new TextEditingController();
+  TextEditingController _numberOfCildren=new TextEditingController();
 
   TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
@@ -78,6 +82,8 @@ class StateAddPeopleNeeded extends State<AddPeopleNeeded>{
                       keyboardType: TextInputType.visiblePassword,
                       controller: _password,
                       decoration: InputDecoration(labelText: 'كلمة المرور'),
+                     obscureText: true,
+
                     ),
 
 
@@ -87,7 +93,7 @@ class StateAddPeopleNeeded extends State<AddPeopleNeeded>{
                     new Padding(padding: EdgeInsets.only(top: 30)),
 
                     new TextField(
-                      controller: _name,
+                      controller: _nameOfFather,
                       decoration: InputDecoration(labelText: 'اسم رب العائلة'),
                     ),
 
@@ -96,6 +102,11 @@ class StateAddPeopleNeeded extends State<AddPeopleNeeded>{
                       decoration: InputDecoration(labelText: 'العنوان'),
                     ),
 
+                    new TextField(
+                      keyboardType: TextInputType.number,
+                      controller: _numberOfCildren,
+                      decoration: InputDecoration(labelText: 'عدد الاطفال'),
+                    ),
 
                     new TextField(
                       keyboardType: TextInputType.number,
@@ -172,6 +183,10 @@ class StateAddPeopleNeeded extends State<AddPeopleNeeded>{
                       register()
                           .then((_){
 
+                                pr = new ProgressDialog(context,type: ProgressDialogType.Normal);
+                                pr.update(progressWidget: new Text('الرجاء الانتظار'));
+                                pr.show();
+
                         myAuth.signInWithEmailAndPassword(email: _email.text,
                             password: _password.text)
 
@@ -180,6 +195,8 @@ class StateAddPeopleNeeded extends State<AddPeopleNeeded>{
 
                               .then((_){
                             insertData(uid);
+                            
+                            pr.hide();
 
                           });
                         });
@@ -259,9 +276,10 @@ class StateAddPeopleNeeded extends State<AddPeopleNeeded>{
 
       PeopleRefrance.child(id).set({
         'id': id,
-        'nameOfFather': _name.text,
+        'nameOfFather': _nameOfFather.text,
         'addres': _address.text,
         'phoneNumber': _phonenumber.text,
+        'number_of_chiledren' : _numberOfCildren.text,
         'locationaltitude':locationaltitude,
         'locationlongitude': locationlongitude,
         'muhafada': dropdownValue,

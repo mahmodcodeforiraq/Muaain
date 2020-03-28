@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+
 
 class  SettingsPage extends StatefulWidget{
   @override
@@ -92,7 +94,7 @@ class StateSettingsPage extends State<SettingsPage>{
               new Divider(color: Colors.black,)    ,
 
               new FlatButton(onPressed: (){
-                Navigator.pop(context);
+              exit(0);
               },
                   child: new Row(
                     mainAxisAlignment: MainAxisAlignment.end,

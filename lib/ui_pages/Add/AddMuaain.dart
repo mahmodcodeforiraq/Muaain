@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
 
 
 String dropdownValue ;
@@ -26,6 +28,7 @@ class StateAddMuaain extends State<AddMuaain>{
 
   bool _loading;
   double _progressValue;
+ProgressDialog pr;
 
 
   String  locationaltitude;
@@ -83,6 +86,7 @@ class StateAddMuaain extends State<AddMuaain>{
 
                       controller: _password,
                       decoration: InputDecoration(labelText: 'كلمة المرور'),
+                      obscureText: true,
                     ),
 
 
@@ -177,6 +181,10 @@ class StateAddMuaain extends State<AddMuaain>{
                       register()
                           .then((_){
 
+                                pr = new ProgressDialog(context,type: ProgressDialogType.Normal);
+                                pr.update(progressWidget: new Text('الرجاء الانتظار'));
+                                pr.show();
+
                         myAuth.signInWithEmailAndPassword(email: _email.text,
                             password: _password.text)
 
@@ -185,6 +193,7 @@ class StateAddMuaain extends State<AddMuaain>{
 
                               .then((_){
                             insertData(uid);
+                            pr.hide();
 
                           });
                         });
