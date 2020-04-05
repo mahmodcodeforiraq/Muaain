@@ -1,7 +1,6 @@
 
-import 'package:ail_alkher/ui_pages/SettingsPage.dart';
+import 'package:ail_alkher/ui_pages/SettingsPageWithoutLogin.dart';
 import 'package:ail_alkher/ui_pages/ViewPage/AhelAlkherListWithoutLogin.dart';
-import 'package:ail_alkher/ui_pages/ViewPage/PeopleList.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,16 +20,14 @@ class HomePageWithoutlogin extends StatefulWidget{
 
 class StateHomePageWithoutlogin extends State<HomePageWithoutlogin>{
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
 
   final List<Widget> _widgetOptions = <Widget>[
 
-    new AhelAlkherlistWithoutLogin(),//0
 
+    new SettingsPageWithoutLogin(),//0
     new PeopleListWithoutLogin(),//1
-    new SettingsPageWithoutLogin(),//2
-
-
+    new AhelAlkherlistWithoutLogin() ,//2
 
 
 
@@ -47,8 +44,20 @@ class StateHomePageWithoutlogin extends State<HomePageWithoutlogin>{
     // TODO: implement initState
     super.initState();
 
+    getUser().then((user) {
+      if (user != null) {
+        Navigator.of(context).pushReplacementNamed('/HomePage');
+
+      }
+    });
+
 
   }
+
+  Future<FirebaseUser> getUser() async {
+    return await myAuth.currentUser();
+  }
+
 
 
   @override
@@ -57,17 +66,7 @@ class StateHomePageWithoutlogin extends State<HomePageWithoutlogin>{
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: new Color(0xffff006064),
-        title: new Column(
-          children: <Widget>[
-
-            new Text('مُعين',style: TextStyle(fontSize: 21),),
-            _selectedIndex==0? new Text('الاشخاص المعينين', style: TextStyle(fontSize: 10, color: Colors.white,)):
-            _selectedIndex==1? new Text('العوائل المحتاجة', style: TextStyle(fontSize: 10, color: Colors.white,)):
-            _selectedIndex==2? new Text('الاعدادات', style: TextStyle(fontSize: 10, color: Colors.white,)):
-
-            new Text(' ')
-          ],
-        ),
+        title:new Text('مُعين',style: TextStyle(fontSize: 21),),
         centerTitle: true,
       ),
       bottomNavigationBar:  new BottomNavigationBar(
@@ -84,11 +83,11 @@ class StateHomePageWithoutlogin extends State<HomePageWithoutlogin>{
 
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon:  Icon(Icons.person,),
-              title:  Text('الاشخاص المعينين',),
-            ),
+              backgroundColor: Colors.blue,
 
+              icon: Icon(Icons.settings,),
+              title: Text('اعدادات'),
+            ),
             BottomNavigationBarItem(
               backgroundColor: Colors.blue,
 
@@ -97,11 +96,13 @@ class StateHomePageWithoutlogin extends State<HomePageWithoutlogin>{
             ),
 
             BottomNavigationBarItem(
-              backgroundColor: Colors.blue,
-
-              icon: Icon(Icons.settings,),
-              title: Text('اعدادات'),
+              backgroundColor: Colors.white,
+              icon:  Icon(Icons.person,),
+              title:  Text('الاشخاص المعينين',),
             ),
+
+
+
 
           ]
 

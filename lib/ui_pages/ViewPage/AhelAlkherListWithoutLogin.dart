@@ -87,36 +87,26 @@ setState(() {
       body: new Stack(
         children: <Widget>[
 
-          new Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new Container(
-                alignment: Alignment.topRight,
-                width: 100,
-                child: FlatButton(onPressed: (){
-                  SearchDepartment(dropdownValue);},
+          new Container(
+            alignment: Alignment.topCenter,
+            height: 50,
 
-                    child: new Row(
-                      children: <Widget>[
-                        new Text('تصفية'),
-                        new Icon(Icons.filter_list)
-                      ],
-                    )
-                ),
-              ),
+            child: FlatButton(onPressed: (){
 
+              Alert();
+            },
 
-              new Container(
-                alignment: Alignment.topLeft,
-                width: 130,
-                child: DropDown(),
-              ),
-
-
-            ],
+                child: new Row(
+                  children: <Widget>[
+                    new Text('تصفية حسب المحافظة'),
+                    new Icon(Icons.filter_list)
+                  ],
+                )
+            ),
           ),
 
-              new Container(
+
+          new Container(
                 padding: EdgeInsets.all(10),
 
                 margin: EdgeInsets.only(top: 50),
@@ -157,18 +147,10 @@ setState(() {
                                                 CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   new Text(
-                                                    'العنوان : ${items2[position]
-                                                        .address}',
-                                                    style:
-                                                    TextStyle(fontSize: 13,color:Colors.black45,),
-                                                    textDirection:
-                                                    TextDirection.rtl,
-                                                  ),
-                                                  new Text(
-                                                    'رقم هاتف  : ${items2[position]
+                                                    'رقم هاتف : ${items[position]
                                                         .phonenumber}',
                                                     style:
-                                                    TextStyle(fontSize: 13,color:Colors.black45,),
+                                                    TextStyle(fontSize: 13,color:Colors.black45, ),
                                                     textDirection:
                                                     TextDirection.rtl,
                                                   ),
@@ -179,6 +161,19 @@ setState(() {
                                                     textDirection:
                                                     TextDirection.rtl,
                                                   ),
+                                                  new Text(
+                                                    'اقرب نقطة دالة : ${items[position]
+                                                        .address}',
+                                                    style:
+                                                    TextStyle(fontSize: 13,color:Colors.black45,),
+                                                    textDirection:
+                                                    TextDirection.rtl,
+                                                  ),
+
+
+                                                  new Container(
+                                                    height: 10,
+                                                  )
                                                 ],
                                               ),
                                             ),
@@ -250,7 +245,7 @@ setState(() {
 //يجب حل مشكلة عددم اعادة التصفية من جديد اذا لم يتم اختيار المحافظة الصحيحة
 
 
-  void SearchDepartment(String searchDepartment)  {
+   SearchMuhafada(String SearchMuhafada)  {
     items.clear();
 
 
@@ -263,7 +258,7 @@ setState(() {
 
         setState(() {
 
-          if(snapshot.value == null ){
+           if(snapshot.value == null ){
 
             Fluttertoast.showToast(
               msg: "لا يوجد مُعين في هذه المحافظة",
@@ -294,6 +289,60 @@ setState(() {
         });
         });
 
+  }
+  Future<void> Alert() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(10),
+            side: new BorderSide(color:Color(0xffff006064) ,
+            width: 3)
+          ),
+          elevation: 6,
+          title: Text('تصفية حسب المحافظة',textAlign: TextAlign.center,),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                new Container(
+                  height: 50,
+                  child:new DropDown() ,
+                ),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+                  child: new Row(
+                  children: <Widget>[
+                  new Text('تصفية',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                  new Icon(Icons.filter_list,color: Colors.black,)
+                  ],
+                   ),
+              onPressed: () {
+                setState(() {
+                  if(dropdownValue =='اختر المحافظة'){
+                    Fluttertoast.showToast(
+                      msg: "يجب عليك اختيار المحافظة",
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 15,
+                    );
+                  }else{
+                    SearchMuhafada(dropdownValue);
+                    Navigator.of(context).pop();
+
+                  }
+                });
+
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
 
@@ -327,6 +376,8 @@ class DropDownWidget extends State {
     'المثنى',
     'ميسان',
     'واسط',
+    'البصرة'
+
 
 
 

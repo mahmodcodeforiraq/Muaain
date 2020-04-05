@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -17,11 +18,11 @@ class  AddPeopleNeeded extends StatefulWidget{
 
 }
 
-final PeopleRefrance = FirebaseDatabase.instance.reference().child('Users').child('People');
 
 FirebaseAuth myAuth = FirebaseAuth.instance;
 
 String uid;
+String idForall;
 class StateAddPeopleNeeded extends State<AddPeopleNeeded>{
 
 
@@ -65,7 +66,7 @@ ProgressDialog pr;
               alignment: Alignment.center,
               height: 100,
               color: new Color(0xffff006064),
-              child: new Text('انشاء حساب جديد',style: new TextStyle(fontSize: 30,color: Colors.white),),
+              child: new Text('اضافة عائلة محتاجة',style: new TextStyle(fontSize: 30,color: Colors.white),),
             ),
 
             new Container(
@@ -73,62 +74,87 @@ ProgressDialog pr;
                 padding: EdgeInsets.all(30),
                 child: new Column(
                   children: <Widget>[
-                    new TextField(
-                      controller: _email,
-                      decoration: InputDecoration(labelText: 'البريد الالكتروني'),
+
+
+
+                    new Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: new TextField(
+                        controller: _nameOfFather,
+                        textDirection: TextDirection.rtl,
+                        decoration: InputDecoration(labelText: 'الاسم',),
+
+                      ),
                     ),
 
-                    new TextField(
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: _password,
-                      decoration: InputDecoration(labelText: 'كلمة المرور'),
-                     obscureText: true,
+                    new Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: new TextField(
+                        keyboardType: TextInputType.number,
+                        controller: _numberOfCildren,
+                        textDirection: TextDirection.rtl,
+                        decoration: InputDecoration(labelText: 'عدد الاطفال'),
+
+                      ),
+                    ),
+                    new Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: new TextField(
+                        keyboardType: TextInputType.number,
+                        controller: _phonenumber,
+                        textDirection: TextDirection.rtl,
+                        decoration: InputDecoration(labelText: 'رقم هاتف'),
+
+                      ),
+                    ),
+                    new Padding(padding: EdgeInsets.only(top: 10)),
+
+                    new Card(
+                      elevation: 5,
+                      child:  new Container(
+                        alignment: Alignment.center,
+                        height: 40,
+                        child: DropDown(),
+                      ),
 
                     ),
 
 
+                    new Directionality(
+                      textDirection: TextDirection.rtl,
+                      child:  new TextField(
+                        controller: _city,
+                        textDirection: TextDirection.rtl,
+                        decoration: InputDecoration(labelText: 'القضاء'),
 
-
-
-                    new Padding(padding: EdgeInsets.only(top: 30)),
-
-                    new TextField(
-                      controller: _nameOfFather,
-                      decoration: InputDecoration(labelText: 'اسم رب العائلة'),
+                      ),
                     ),
 
-                    new TextField(
-                      controller: _address,
-                      decoration: InputDecoration(labelText: 'العنوان'),
-                    ),
+                    new Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: new TextField(
+                        controller: _alhay,
+                        textDirection: TextDirection.rtl,
+                        decoration: InputDecoration(labelText: 'الحي'),
 
-                    new TextField(
-                      keyboardType: TextInputType.number,
-                      controller: _numberOfCildren,
-                      decoration: InputDecoration(labelText: 'عدد الاطفال'),
-                    ),
-
-                    new TextField(
-                      keyboardType: TextInputType.number,
-                      controller: _phonenumber,
-                      decoration: InputDecoration(labelText: 'رقم هاتف'),
+                      ),
                     ),
 
 
-                    new TextField(
-                      controller: _city,
-                      decoration: InputDecoration(labelText: 'قضاء'),
-                    ),
-                    new TextField(
-                      controller: _alhay,
-                      decoration: InputDecoration(labelText: 'الحي'),
+
+                    new Directionality(
+                      textDirection: TextDirection.rtl,
+                      child:     new TextField(
+                        controller: _address,
+                        textDirection: TextDirection.rtl,
+                        decoration: InputDecoration(labelText: 'اقرب نقطة دالة'),
+
+                      ),
+
                     ),
 
-                    new Container(
-                      height: 60,
-                      child:  DropDown(),
-                    ),
-                    new Padding(padding: EdgeInsets.only(top: 40)),
+
+                    new Padding(padding: EdgeInsets.only(top: 20)),
 
                     new RaisedButton(onPressed: (){
 
@@ -178,31 +204,20 @@ ProgressDialog pr;
 
 
 
-                    new RaisedButton(onPressed: (){
+                    new RaisedButton(onPressed: ()async{
 
-                      register()
-                          .then((_){
+                      pr = new ProgressDialog(
+                          context, type: ProgressDialogType.Normal);
+                      pr.update(
+                          progressWidget: new Text('الرجاء الانتظار'));
+                      pr.show();
 
-                                pr = new ProgressDialog(context,type: ProgressDialogType.Normal);
-                                pr.update(progressWidget: new Text('الرجاء الانتظار'));
-                                pr.show();
-
-                        myAuth.signInWithEmailAndPassword(email: _email.text,
-                            password: _password.text)
-
-                            .then((_){
-                          inputData()
-
-                              .then((_){
-                            insertData(uid);
-                            
-                            pr.hide();
-
-                          });
-                        });
-
+                      insertDataInAll().then((_){
+                        insertDataInUserPage();
+                        pr.hide();
 
                       });
+
                     },
                       elevation: 5,
                       color: new Color(0xffff006064),
@@ -213,7 +228,7 @@ ProgressDialog pr;
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
 
-                          new Text('انشاء حساب وحفظ البيانات',style: new TextStyle(fontSize: 18,color: Colors.white),),
+                          new Text('حفظ البيانات',style: new TextStyle(fontSize: 18,color: Colors.white),),
 
                         ],
                       ),
@@ -227,69 +242,68 @@ ProgressDialog pr;
 
 
 
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-
-
-
-                new FlatButton(onPressed: (){
-                  Navigator.of(context).pushNamed('/Login');
-                },
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Text('سجل دخول',style: TextStyle(fontSize: 20,color: Color(0xffff006064),fontWeight: FontWeight.bold),),
-                        new Padding(padding: EdgeInsets.only(left: 10)),
-                      ],
-                    )
-                ),
-
-                new Text(' تمتلك حساب؟',
-                    textDirection:TextDirection.ltr ,
-                    style: new TextStyle(fontSize: 18,color: Colors.black ,)
-                ),
-
-
-              ],
-            ),
-            new Padding(padding: EdgeInsets.only(bottom: 20)),
-
-
           ]
         ),
 
     );
   }
 
-  Future register() async{
-    myAuth.createUserWithEmailAndPassword(
-        email: _email.text,
-        password: _password.text);
+
+  Future<String> loaduid() async {
+    final pref = await SharedPreferences.getInstance();
+    final key = 'uid';
+    final value = pref.getString(key);
+    print('token : $value');
+
+    return value;
+  }
+
+
+  Future insertDataInAll()async{
+
+    final PeopleRefrance = FirebaseDatabase.instance.reference().child('Users').child('People');
+
+    idForall = PeopleRefrance.push().key;
+
+
+    PeopleRefrance.child(idForall).set({
+      'id': idForall,
+      'nameOfFather': _nameOfFather.text,
+      'addres': _address.text,
+      'phoneNumber': _phonenumber.text,
+      'number_of_chiledren' : _numberOfCildren.text,
+      'locationaltitude':locationaltitude,
+      'locationlongitude': locationlongitude,
+      'muhafada': dropdownValue,
+      'city': _city.text,
+      'alhay': _alhay.text,
+    });
+
 
   }
 
-  Future insertData(id)async{
+   insertDataInUserPage()async{
 
+    final pref = await SharedPreferences.getInstance();
+    final key = 'uid';
+    final id = pref.getString(key);
+    final PeopleRefrance = FirebaseDatabase.instance.reference().child('Users').child('userProfile').child('People');
 
-    setState(() {
-
-      PeopleRefrance.child(id).set({
-        'id': id,
-        'nameOfFather': _nameOfFather.text,
-        'addres': _address.text,
-        'phoneNumber': _phonenumber.text,
-        'number_of_chiledren' : _numberOfCildren.text,
-        'locationaltitude':locationaltitude,
-        'locationlongitude': locationlongitude,
-        'muhafada': dropdownValue,
-        'city': _city.text,
-        'alhay': _alhay.text,
-      }).then((_) {
-        Navigator.of(context).pushReplacementNamed('/HomePage');
-      });
-
+    PeopleRefrance.child(id).child(idForall).set({
+      'id': idForall,
+      'nameOfFather': _nameOfFather.text,
+      'addres': _address.text,
+      'phoneNumber': _phonenumber.text,
+      'number_of_chiledren' : _numberOfCildren.text,
+      'locationaltitude':locationaltitude,
+      'locationlongitude': locationlongitude,
+      'muhafada': dropdownValue,
+      'city': _city.text,
+      'alhay': _alhay.text,
+    }).then((_) {
+      Navigator.of(context).pushReplacementNamed('/HomePage');
     });
+
 
   }
 
@@ -308,13 +322,6 @@ ProgressDialog pr;
 
   }
 
-  Future<String> inputData() async {
-    final FirebaseUser user = await myAuth.currentUser();
-    uid = user.uid;
-    // here you write the codes to input the data into firestore
-
-    return uid;
-  }
 
 }
 
@@ -350,6 +357,7 @@ class DropDownWidget extends State {
     'المثنى',
     'ميسان',
     'واسط',
+    'البصرة'
 
 
 

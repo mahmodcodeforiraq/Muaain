@@ -1,13 +1,11 @@
-import 'package:ail_alkher/ui_pages/Add/AddMuaain.dart';
-import 'package:ail_alkher/ui_pages/Add/AddPeopleNeeded.dart';
-import 'package:ail_alkher/ui_pages/SettingsPageWithoutLogin.dart';
-import 'package:ail_alkher/ui_pages/ViewPage/PeopleList.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'ViewPage/AhelAlkherList.dart';
 
-class RegisterPage extends StatefulWidget{
+class  RegisterPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -16,103 +14,156 @@ class RegisterPage extends StatefulWidget{
 
 }
 
-
 FirebaseAuth myAuth = FirebaseAuth.instance;
+String uid;
 
 class StateRegisterPage extends State<RegisterPage>{
 
-  int _selectedIndex = 0;
-
-  final List<Widget> _widgetOptions = <Widget>[
-
-    new AddMuaain(),//0
-
-    new AddPeopleNeeded(),//1
-
-
-
-
-  ];
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-  }
+  TextEditingController _email = new TextEditingController();
+  TextEditingController _password = new TextEditingController();
+ProgressDialog pr;
 
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: new AppBar(backgroundColor:new Color(0xffff006064),
         elevation: 0,
-        backgroundColor: new Color(0xffff006064),
-        title: new Column(
-          children: <Widget>[
-            _selectedIndex==0? new Text('مُعين', style: TextStyle(fontSize: 20, color: Colors.white,)):
-            _selectedIndex==1? new Text('العوائل المحتاجة', style: TextStyle(fontSize: 20, color: Colors.white,)):
-
-            new Text(' ')
-          ],
-        ),
-        centerTitle: true,
       ),
 
-      bottomNavigationBar:  new BottomNavigationBar(
-          showUnselectedLabels: false,
+      body: new ListView(
+          children: <Widget>[
 
-          selectedItemColor: Colors.white,
-          backgroundColor: new Color(0xffff006064),
-          unselectedItemColor: Colors.black45,
-          selectedLabelStyle:new TextStyle(color:  Color(0xffEEE8A9)) ,
-          elevation: 10,
-          onTap: _onItemTapped,
-          currentIndex: _selectedIndex,
-          iconSize: 30,
-
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon:  Icon(Icons.person,),
-              title:  Text('الاشخاص المعينين',),
+            new Container(
+              alignment: Alignment.center,
+              height: 200,
+              color: new Color(0xffff006064),
+              child: new Text('تسجيل حساب جديد',style: new TextStyle(fontSize: 30,color: Colors.white),),
             ),
 
-            BottomNavigationBarItem(
-              backgroundColor: Colors.blue,
 
-              icon: Icon(Icons.people,),
-              title: Text('العوائل المحتاجة'),
+            new Container(
+              padding: EdgeInsets.all(50),
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    child: new Column(
+                      children: <Widget>[
+                        new TextField(
+                          controller: _email,
+                          decoration: InputDecoration(labelText: 'البريد الالكتروني'),
+                        ),
+
+                        new TextField(
+                          controller: _password,
+                          decoration: InputDecoration(labelText: 'كلمة المرور'),
+                          obscureText: true,
+                        ),
+
+                        new Padding(padding: EdgeInsets.only(top: 40)),
+
+
+                        new Padding(padding: EdgeInsets.only(top: 40)),
+
+                        new RaisedButton(onPressed: (){
+                           pr = new ProgressDialog(context,type: ProgressDialogType.Normal);
+                                pr.update(progressWidget: new Text('الرجاء الانتظار'));
+                                pr.show();
+
+                                 register().then((_){
+                                  myAuth.signInWithEmailAndPassword(email: _email.text,
+                                  password: _password.text).then((user){
+                                  getUID();
+
+                                  Navigator.of(context).pushReplacementNamed('/HomePage');
+
+                                  }).catchError((onError){
+                                  pr.hide();
+                                  Fluttertoast.showToast(
+                                  msg: "تأكد من ملأ جميع الحقول او تاكد من الاتصال بالانترنت",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 10);
+
+
+                                  });
+                                  });
+                               },
+                          elevation: 5,
+                          color: new Color(0xffff006064),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:new BorderRadius.circular(10)),
+
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+
+                              new Text('تسجيل الدخول',style: new TextStyle(fontSize: 25,color: Colors.white),),
+
+                            ],
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+                  )
+
+                ],
+              ),
             ),
 
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+
+                new FlatButton(onPressed: (){
+                  Navigator.of(context).pushNamed('/Login');
+                },
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Text('تسجيل الدخول',style: TextStyle(fontSize: 20,color: Color(0xffff006064),fontWeight: FontWeight.bold),),
+                        new Padding(padding: EdgeInsets.only(left: 15)),
+                        new Icon(Icons.person_add,color: Color(0xffff006064),)
+                      ],
+                    )
+                ),
+
+                new Text('هل تمتلك حساب؟',
+                    textDirection:TextDirection.ltr ,
+                    style: new TextStyle(fontSize: 18,color: Colors.black ,)
+                ),
+
+
+              ],
+            ),
 
           ]
-
-
-      ),
-
-
-      body:  new Container(
-        child: new Stack(
-          children: <Widget>[
-            new Container(
-              child:
-              _widgetOptions.elementAt(_selectedIndex),
-            ),
-
-
-
-          ],
-        ),
-
       ),
     );
   }
 
+  Future register() async{
+    myAuth.createUserWithEmailAndPassword(
+        email: _email.text,
+        password: _password.text).then((_){
+
+
+    });
+
+  }
+
+  Future<String> getUID() async {
+    final FirebaseUser user = await myAuth.currentUser();
+    uid = user.uid;
+
+    final pref = await SharedPreferences.getInstance();
+    final key = 'uid';
+    final value =uid;
+    pref.setString(key, value);
+    // here you write the codes to input the data into firestore
+    print(value);
+    return uid;
+  }
 }

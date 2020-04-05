@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 class  LoginPage extends StatefulWidget{
@@ -13,6 +18,7 @@ class  LoginPage extends StatefulWidget{
 }
 
 FirebaseAuth myAuth = FirebaseAuth.instance;
+String uid;
 
 class StateLoginPage extends State<LoginPage>{
 
@@ -68,14 +74,24 @@ ProgressDialog pr;
                                 pr.update(progressWidget: new Text('الرجاء الانتظار'));
                                 pr.show();
 
-                          myAuth.signInWithEmailAndPassword(email: _email.text,
-                              password: _password.text).then((_){
-                                
-                               pr.hide();
+                                    myAuth.signInWithEmailAndPassword(email: _email.text,
+                                        password: _password.text).then((user){
+                                      getUID();
+                                          pr.hide();
+
+                                      Navigator.of(context).pushReplacementNamed('/HomePage');
+
+                                    }).catchError((onError){
+                                      pr.hide();
+                                      Fluttertoast.showToast(
+                                          msg: "تأكد من ادخال البيانات او تأكد من الاتصال بالانترنت",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 10);
+
+                                    });
 
 
-                            Navigator.of(context).pushReplacementNamed('/HomePage');
-                          });
+
                         },
                           elevation: 5,
                           color: new Color(0xffff006064),
@@ -132,9 +148,17 @@ ProgressDialog pr;
     );
   }
 
+  Future<String> getUID() async {
+    final FirebaseUser user = await myAuth.currentUser();
+    uid = user.uid;
 
-  progress(){
-
+    final pref = await SharedPreferences.getInstance();
+    final key = 'uid';
+    final value =uid;
+    pref.setString(key, value);
+    // here you write the codes to input the data into firestore
+print(value);
+    return uid;
   }
 
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,16 +34,27 @@ class StateAboutTeam extends State<AboutTeam> {
             ),
 
             new Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+
                 new Padding(padding: EdgeInsets.only(top: 20)),
-                new Text(
-                  'البرمجة من اجل العراق',
-                  style: TextStyle(fontSize: 18),
+
+                new Container(
+                  alignment: Alignment.center,
+                  child: new Text(
+                    'البرمجة من اجل العراق  ',
+                    style: TextStyle(fontSize: 25),
+                  ),
                 ),
-                new Text(
-                  'فريق صلاح الدين',
-                  style: TextStyle(fontSize: 18),
+                new Padding(padding: EdgeInsets.only(top: 20)),
+                new Container(
+                  alignment: Alignment.center,
+                  child: new Text(
+                    'فريق صلاح الدين',
+                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                  ),
                 ),
+
                 new Container(
                     padding: EdgeInsets.all(20),
                     alignment: Alignment.center,
@@ -60,7 +72,7 @@ class StateAboutTeam extends State<AboutTeam> {
                                         child: new Column(
                                           children: <Widget>[
                                             new Image.asset('img/mahmod.png'),
-                                            new Text('مبرمج المشروع'),
+                                            new Text('مبرمج المشروع',style: TextStyle(fontWeight: FontWeight.bold)),
                                           ],
                                         )),
 
@@ -71,7 +83,8 @@ class StateAboutTeam extends State<AboutTeam> {
                                         child: new Column(
                                           children: <Widget>[
                                             new Image.asset('img/marwan.png'),
-                                            new Text('مدير المشروع'),
+                                            new Text('مدير المشروع',style: TextStyle(fontWeight: FontWeight.bold)),
+                                            new Text('ومصمم الـ UI',style: TextStyle(fontWeight: FontWeight.bold),textDirection: TextDirection.rtl,),
                                           ],
                                         )
                                     ),

@@ -7,6 +7,7 @@ class AboutApp extends StatefulWidget {
   }
 }
 
+
 class StateAboutApp extends State<AboutApp> {
   @override
   Widget build(BuildContext context) {

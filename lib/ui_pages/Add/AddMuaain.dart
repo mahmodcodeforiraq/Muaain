@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:getflutter/components/card/gf_card.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
 String dropdownValue ;
-
+String idForall;
 class  AddMuaain extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -17,29 +19,28 @@ class  AddMuaain extends StatefulWidget{
 
 }
 
-final MuaainRefrance = FirebaseDatabase.instance.reference().child('Users').child('Muaain');
 
 FirebaseAuth myAuth = FirebaseAuth.instance;
 
 String uid;
 
-class StateAddMuaain extends State<AddMuaain>{
+class StateAddMuaain extends State<AddMuaain> {
 
 
   bool _loading;
   double _progressValue;
-ProgressDialog pr;
+  ProgressDialog pr;
 
 
-  String  locationaltitude;
+  String locationaltitude;
   String locationlongitude;
 
 
-  TextEditingController _name= new TextEditingController();
-  TextEditingController _address= new TextEditingController();
-  TextEditingController _city= new TextEditingController();
-  TextEditingController _phonenumber= new TextEditingController();
-  TextEditingController _alhay=new TextEditingController();
+  TextEditingController _name = new TextEditingController();
+  TextEditingController _address = new TextEditingController();
+  TextEditingController _city = new TextEditingController();
+  TextEditingController _phonenumber = new TextEditingController();
+  TextEditingController _alhay = new TextEditingController();
 
   TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
@@ -49,11 +50,9 @@ ProgressDialog pr;
   void initState() {
     // TODO: implement initState
     super.initState();
-    dropdownValue='اختر المحافظة';
+    dropdownValue = 'اختر المحافظة';
     _loading = false;
     _progressValue = 0.0;
-
-
   }
 
   @override
@@ -68,257 +67,241 @@ ProgressDialog pr;
               alignment: Alignment.center,
               height: 100,
               color: new Color(0xffff006064),
-              child: new Text('انشاء حساب جديد',style: new TextStyle(fontSize: 30,color: Colors.white),),
+              child: new Text('اضافة شخص مُعين',
+                style: new TextStyle(fontSize: 30, color: Colors.white),),
             ),
 
             new Container(
-              child:new Container(
-                padding: EdgeInsets.all(30),
-                child: new Column(
-                  children: <Widget>[
-                    new TextField(
-                      controller: _email,
-                      decoration: InputDecoration(labelText: 'البريد الالكتروني'),
-                    ),
-
-                    new TextField(
-                      keyboardType: TextInputType.visiblePassword,
-
-                      controller: _password,
-                      decoration: InputDecoration(labelText: 'كلمة المرور'),
-                      obscureText: true,
-                    ),
+                child: new Container(
+                  padding: EdgeInsets.all(30),
+                  child: new Column(
+                    children: <Widget>[
 
 
-
-
-
-                    new Padding(padding: EdgeInsets.only(top: 30)),
-
-                    new TextField(
-                      controller: _name,
-                      decoration: InputDecoration(labelText: 'الاسم'),
-                    ),
-
-                    new TextField(
-                      controller: _address,
-                      decoration: InputDecoration(labelText: 'العنوان'),
-                    ),
-
-
-                    new TextField(
-                      keyboardType: TextInputType.number,
-                      controller: _phonenumber,
-                      decoration: InputDecoration(labelText: 'رقم هاتف'),
-                    ),
-
-
-                    new TextField(
-                      controller: _city,
-                      decoration: InputDecoration(labelText: 'قضاء'),
-                    ),
-                    new TextField(
-                      controller: _alhay,
-                      decoration: InputDecoration(labelText: 'الحي'),
-                    ),
-
-                    new Container(
-                      height: 60,
-                      child:  DropDown(),
-                    ),
-                    new Padding(padding: EdgeInsets.only(top: 40)),
-
-                    new RaisedButton(onPressed: (){
-
-                      getMyLocation();
-                    },
-                      elevation: 5,
-                      color: Color(0xffff006064),
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(10)
-                      ),
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          new Text('موقعي على الخريطة',style: new TextStyle(fontSize: 18,color: Colors.white),),
-                          new Padding(padding: EdgeInsets.only(left: 30)),
-
-                          new Icon(Icons.location_on,color: Colors.white,)
-                        ],
-                      ),
-                    ),
-
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-
-                        new Container(
-                          alignment:Alignment.topCenter ,
-                          width: 130,
-                          child: new Text('خط العرض $locationaltitude',textAlign: TextAlign.center,style: TextStyle(fontSize: 15),),
+                      new Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: new TextField(
+                          controller: _name,
+                          textDirection: TextDirection.rtl,
+                          decoration: InputDecoration(labelText: 'الاسم',),
 
                         ),
-                        new Container(
+                      ),
+
+
+                      new Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: new TextField(
+                          keyboardType: TextInputType.number,
+                          controller: _phonenumber,
+                          textDirection: TextDirection.rtl,
+                          decoration: InputDecoration(labelText: 'رقم هاتف'),
+
+                        ),
+                      ),
+                      new Padding(padding: EdgeInsets.only(top: 10)),
+
+                      new Card(
+                        elevation: 5,
+                        child:  new Container(
                           alignment: Alignment.center,
+                          height: 40,
+                          child: DropDown(),
+                        ),
 
-                          width: 130,
+                      ),
 
-                          child:new Text('خط الطول $locationlongitude',textAlign: TextAlign.center,style: TextStyle(fontSize: 15),),
+
+                      new Directionality(
+                        textDirection: TextDirection.rtl,
+                        child:  new TextField(
+                          controller: _city,
+                          textDirection: TextDirection.rtl,
+                          decoration: InputDecoration(labelText: 'القضاء'),
+
+                        ),
+                      ),
+
+                      new Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: new TextField(
+                          controller: _alhay,
+                          textDirection: TextDirection.rtl,
+                          decoration: InputDecoration(labelText: 'الحي'),
+
+                        ),
+                      ),
+
+
+
+                      new Directionality(
+                        textDirection: TextDirection.rtl,
+                        child:     new TextField(
+                          controller: _address,
+                          textDirection: TextDirection.rtl,
+                          decoration: InputDecoration(labelText: 'اقرب نقطة دالة'),
 
                         ),
 
-                      ],
-                    ),
+                      ),
 
 
+                      new Padding(padding: EdgeInsets.only(top: 20)),
 
-                    new Padding(padding: EdgeInsets.only(top: 10)),
+                      new RaisedButton(
+                        onPressed: () {
+                          getMyLocation();
+                        },
+                        elevation: 5,
+                        color: Color(0xffff006064),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(10)
+                        ),
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Text('موقعي على الخريطة',
+                              style: new TextStyle(fontSize: 18, color: Colors
+                                  .white),),
+                            new Padding(padding: EdgeInsets.only(left: 30)),
 
+                            new Icon(Icons.location_on, color: Colors.white,)
+                          ],
+                        ),
+                      ),
 
-
-                    new RaisedButton(onPressed: (){
-
-                      register()
-                          .then((_){
-
-                                pr = new ProgressDialog(context,type: ProgressDialogType.Normal);
-                                pr.update(progressWidget: new Text('الرجاء الانتظار'));
-                                pr.show();
-
-                        myAuth.signInWithEmailAndPassword(email: _email.text,
-                            password: _password.text)
-
-                            .then((_){
-                          inputData()
-
-                              .then((_){
-                            insertData(uid);
-                            pr.hide();
-
-                          });
-                        });
-
-
-                      });
-                    },
-                      elevation: 5,
-                      color: new Color(0xffff006064),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:new BorderRadius.circular(10)),
-
-                      child: new Row(
+                      new Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
 
-                          new Text('انشاء حساب وحفظ البيانات',style: new TextStyle(fontSize: 18,color: Colors.white),),
+                          new Container(
+                            alignment: Alignment.topCenter,
+                            width: 130,
+                            child: new Text('خط العرض $locationaltitude',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 15),),
+
+                          ),
+                          new Container(
+                            alignment: Alignment.center,
+
+                            width: 130,
+
+                            child: new Text('خط الطول $locationlongitude',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 15),),
+
+                          ),
 
                         ],
                       ),
-                    ),
 
-                  ],
-                ),
-              )
+
+                      new Padding(padding: EdgeInsets.only(top: 10)),
+
+
+                      new RaisedButton(
+                        onPressed: ()async {
+                          final pref = await SharedPreferences.getInstance();
+                          final key = 'uid';
+                          final value = pref.getString(key);
+                          pr = new ProgressDialog(
+                              context, type: ProgressDialogType.Normal);
+                          pr.update(
+                              progressWidget: new Text('الرجاء الانتظار'));
+                          pr.show();
+
+                          insertDataInAll().then((_){
+                            insertDataInUserPage(value);
+                          });
+
+                          pr.hide();
+                        },
+                        elevation: 5,
+                        color: new Color(0xffff006064),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(10)),
+
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+
+                            new Text('حفظ البيانات',
+                              style: new TextStyle(fontSize: 18, color: Colors
+                                  .white),),
+
+                          ],
+                        ),
+                      ),
+
+                    ],
+                  ),
+                )
 
             ),
-
-
-
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-
-
-                new FlatButton(onPressed: (){
-                  Navigator.of(context).pushNamed('/Login');
-                },
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Text('سجل دخول',style: TextStyle(fontSize: 20,color: Color(0xffff006064),fontWeight: FontWeight.bold),),
-                        new Padding(padding: EdgeInsets.only(left: 10)),
-                      ],
-                    )
-                ),
-
-                new Text(' تمتلك حساب؟',
-                    textDirection:TextDirection.ltr ,
-                    style: new TextStyle(fontSize: 18,color: Colors.black ,)
-                ),
-
-
-              ],
-            ),
-            new Padding(padding: EdgeInsets.only(bottom: 20)),
 
 
           ]
-        ),
+      ),
 
     );
   }
 
 
 
-  Future register() async{
-    myAuth.createUserWithEmailAndPassword(
-        email: _email.text,
-        password: _password.text).then((_){
 
+  Future insertDataInAll() async {
+    final MuaainRefrance = FirebaseDatabase.instance.reference().child('Users').child('Muaain');
 
+    idForall = MuaainRefrance.push().key;
+
+    await MuaainRefrance.child(idForall).set({
+      'id': idForall,
+      'name': _name.text,
+      'addres': _address.text,
+      'phoneNumber': _phonenumber.text,
+      'locationaltitude': locationaltitude,
+      'locationlongitude': locationlongitude,
+      'muhafada': dropdownValue,
+      'city': _city.text,
+      'alhay': _alhay.text,
     });
-
   }
 
-  Future insertData(id)async{
 
+  Future insertDataInUserPage(String id) async {
+    final MuaainRefrance = FirebaseDatabase.instance.reference().child('Users').child('userProfile').child('Muaain');
 
-
-     await MuaainRefrance.child(id).set({
-        'id': id,
-        'name': _name.text,
-        'addres': _address.text,
-        'phoneNumber': _phonenumber.text,
-        'locationaltitude':locationaltitude,
-        'locationlongitude': locationlongitude,
-        'muhafada': dropdownValue,
-        'city': _city.text,
-        'alhay': _alhay.text,
-      }).then((_) {
-
-       Navigator.of(context).pushReplacementNamed('/HomePage');
-
-      });
-
-
-
+    await MuaainRefrance.child(id).child(idForall).set({
+      'id': idForall,
+      'name': _name.text,
+      'addres': _address.text,
+      'phoneNumber': _phonenumber.text,
+      'locationaltitude': locationaltitude,
+      'locationlongitude': locationlongitude,
+      'muhafada': dropdownValue,
+      'city': _city.text,
+      'alhay': _alhay.text,
+    }).then((_) {
+      Navigator.of(context).pushReplacementNamed('/HomePage');
+    });
   }
 
-  void getMyLocation()async{
-
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+  void getMyLocation() async {
+    Position position = await Geolocator().getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low);
 
     print(position);
     setState(() {
-      locationaltitude = '${position.latitude}';//خط العرض
-      locationlongitude = '${position.longitude}';//خط الطول
+      locationaltitude = '${position.latitude}'; //خط العرض
+      locationlongitude = '${position.longitude}'; //خط الطول
 
 
     });
-
-
   }
 
-  Future<String> inputData() async {
-    final FirebaseUser user = await myAuth.currentUser();
-    uid = user.uid;
-    // here you write the codes to input the data into firestore
-
-    return uid;
-  }
 
 }
-
 
 
 
@@ -351,6 +334,7 @@ class DropDownWidget extends State {
     'المثنى',
     'ميسان',
     'واسط',
+    'البصرة'
 
 
 

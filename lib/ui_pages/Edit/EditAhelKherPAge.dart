@@ -3,6 +3,13 @@ import 'package:ail_alkher/Model/People.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+String dropdownValue ;
+
+
 
 class EditAhelKherPage extends StatefulWidget {
   final AhelAlkher ahelkher;
@@ -13,16 +20,20 @@ class EditAhelKherPage extends StatefulWidget {
   }
 }
 
-final ahelkherRefrence =
-    FirebaseDatabase.instance.reference();
+final ahelkherRefrence = FirebaseDatabase.instance.reference();
 
+String value;
 class StateEditAhelKherPage extends State<EditAhelKherPage> {
   TextEditingController _nameController;
   TextEditingController _phonenumberControlar;
   TextEditingController _addressControlar;
   TextEditingController _cityControlar;
-  TextEditingController _muhafadaControlar;
     TextEditingController _alhay;
+
+
+  bool _loading;
+  double _progressValue;
+  ProgressDialog pr;
 
 
   @override
@@ -33,12 +44,23 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
     _phonenumberControlar = new TextEditingController(text: widget.ahelkher.phonenumber);
     _addressControlar = new TextEditingController(text: widget.ahelkher.address);
     _cityControlar = new TextEditingController(text: widget.ahelkher.city);
-    _muhafadaControlar = new TextEditingController(text: widget.ahelkher.muhafada);
     _alhay = new TextEditingController(text: widget.ahelkher.alhay);
 
 
+    dropdownValue=widget.ahelkher.muhafada;
+    loaduid();
 
   }
+
+
+  loaduid() async {
+    final pref = await SharedPreferences.getInstance();
+    final key = 'uid';
+    value = pref.getString(key);
+    print('uid : $value');
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,15 +111,9 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
                     labelStyle: TextStyle(color: Color(0xffff006064))),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
-              new TextField(
-                controller: _muhafadaControlar,
-                decoration: InputDecoration(
-                  labelText: "المحافظة",
-                  icon: new Icon(Icons.confirmation_number,
-                      color: Color(0xffff006064)),
-                  fillColor: Color(0xffff006064),
-                  labelStyle: TextStyle(color: Color(0xffff006064)),
-                ),
+              new Container(
+                height: 50,
+                child: new DropDown(),
               ),
               new Padding(padding: EdgeInsets.only(top: 10)),
               new TextField(
@@ -126,25 +142,17 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
 
               new Padding(padding: EdgeInsets.only(top: 30)),
               new RaisedButton(
-
-
                 onPressed: () {
-                   ahelkherRefrence.child('Users').child('Muaain').child(widget.ahelkher.id).set({
-                    'id': widget.ahelkher.id,
-                    'name': _nameController.text,
-                    'addres': _addressControlar.text,
-                    'phoneNumber': _phonenumberControlar.text,
-                    'locationaltitude': widget.ahelkher.locationaltitude,
-                    'locationlongitude': widget.ahelkher.locationlongitude,
-                    'muhafada': _muhafadaControlar.text,
-                    'city': _cityControlar.text,
-                    'alhay': _alhay.text,
+                  pr = new ProgressDialog(
+                      context, type: ProgressDialogType.Normal);
+                  pr.update(
+                      progressWidget: new Text('الرجاء الانتظار'));
+                  pr.show();
 
-
-                  }).then((_) {
-                    Navigator.pop(context);
+                  updateInMainList();
+                  updateInProfile ().then((_){
+                      pr.hide();
                   });
-                print(widget.ahelkher.id);
                 },
                 child: new Text('تعديل البيانات',style: TextStyle(fontSize: 20,color: Colors.white),),
                 color: Color(0xffff006064),
@@ -157,5 +165,119 @@ class StateEditAhelKherPage extends State<EditAhelKherPage> {
           ),
         ));
   }
+
+       updateInMainList () {
+
+        ahelkherRefrence.child('Users').child('Muaain').child(widget.ahelkher.id).set({
+        'id': widget.ahelkher.id,
+        'name': _nameController.text,
+        'addres': _addressControlar.text,
+        'phoneNumber': _phonenumberControlar.text,
+        'locationaltitude': widget.ahelkher.locationaltitude,
+        'locationlongitude': widget.ahelkher.locationlongitude,
+        'muhafada': dropdownValue,
+        'city': _cityControlar.text,
+        'alhay': _alhay.text,
+
+
+        }).then((_) {
+        Navigator.pop(context);
+        });
+
+        }
+
+  updateInProfile () {
+
+    ahelkherRefrence.child('Users').child('userProfile').child('Muaain')
+        .child('$value').child(widget.ahelkher.id).set({
+      'id': widget.ahelkher.id,
+      'name': _nameController.text,
+      'addres': _addressControlar.text,
+      'phoneNumber': _phonenumberControlar.text,
+      'locationaltitude': widget.ahelkher.locationaltitude,
+      'locationlongitude': widget.ahelkher.locationlongitude,
+      'muhafada': dropdownValue,
+      'city': _cityControlar.text,
+      'alhay': _alhay.text,
+
+
+    }).then((_) {
+      Navigator.pop(context);
+    });
+
+  }
+}
+class DropDown extends StatefulWidget {
+  @override
+  DropDownWidget createState() => DropDownWidget();
+}
+
+
+
+class DropDownWidget extends State {
+
+
+  List <String> spinnerItems = [
+    'اختر المحافظة',
+    'دهوك',
+    'اربيل',
+    'سليمانية',
+    'نينوى',
+    'كركوك',
+    'صلاح الدين',
+    'ديالى',
+    'الانبار',
+    'بغداد',
+    'بابل',
+    'ذيقار',
+    'النجف',
+    'كربلاء',
+    'القادسية ',
+    'المثنى',
+    'ميسان',
+    'واسط',
+    'البصرة'
+
+
+
+
+  ] ;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: new Container(
+        alignment: Alignment.center,
+        height: 50,
+        child :
+
+        DropdownButton<String>(
+          value: dropdownValue,
+          icon: Icon(Icons.arrow_drop_down),
+          iconSize: 24,
+          elevation: 16,
+          style: TextStyle(color: Colors.black45, fontSize: 18),
+          underline: Container(
+            height: 2,
+            color: new Color(0xffff006064),
+          ),
+          onChanged: (String data) {
+            setState(() {
+              dropdownValue = data;
+            });
+          },
+          items: spinnerItems.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+
+      ),
+    );
+  }
+
+
 
 }

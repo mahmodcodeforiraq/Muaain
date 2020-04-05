@@ -83,38 +83,39 @@ class StatePeopleList extends State<PeopleList>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
+        floatingActionButton:new Container(
+          padding: EdgeInsets.only(left: 30),
+          alignment: Alignment.bottomLeft,
+          child:  new FloatingActionButton(onPressed: (){
+            Navigator.of(context).pushNamed('/AddPeopleNeeded');
+          },
+            child: new Icon(Icons.person_add,size: 25,),
+            backgroundColor: new Color(0xffff006064),
+
+          ),
+        ),
 
 
       body: new Stack(
         children: <Widget>[
-          new Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new Container(
-                alignment: Alignment.topRight,
-                width: 100,
-                child: FlatButton(onPressed: (){
-                  SearchDepartment(dropdownValue);},
+          new Container(
+            alignment: Alignment.topCenter,
+            height: 50,
 
-                    child: new Row(
-                      children: <Widget>[
-                        new Text('تصفية'),
-                        new Icon(Icons.filter_list)
-                      ],
-                    )
-                ),
-              ),
+            child: FlatButton(onPressed: (){
 
+              Alert();
+            },
 
-              new Container(
-                alignment: Alignment.topLeft,
-                width: 130,
-                child: DropDown(),
-              ),
-
-
-            ],
+                child: new Row(
+                  children: <Widget>[
+                    new Text('تصفية حسب المحافظة'),
+                    new Icon(Icons.filter_list)
+                  ],
+                )
+            ),
           ),
+
 
 
 
@@ -157,18 +158,10 @@ class StatePeopleList extends State<PeopleList>{
                                                 CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   new Text(
-                                                    'العنوان : ${items[position]
-                                                        .address}',
-                                                    style:
-                                                    TextStyle(fontSize: 13,color:Colors.black45,),
-                                                    textDirection:
-                                                    TextDirection.rtl,
-                                                  ),
-                                                  new Text(
-                                                    'رقم هاتف  : ${items[position]
+                                                    'رقم هاتف : ${items[position]
                                                         .phonenumber}',
                                                     style:
-                                                    TextStyle(fontSize: 13,color:Colors.black45,),
+                                                    TextStyle(fontSize: 13,color:Colors.black45, ),
                                                     textDirection:
                                                     TextDirection.rtl,
                                                   ),
@@ -179,43 +172,53 @@ class StatePeopleList extends State<PeopleList>{
                                                     textDirection:
                                                     TextDirection.rtl,
                                                   ),
+                                                  new Text(
+                                                    'اقرب نقطة دالة : ${items[position]
+                                                        .address}',
+                                                    style:
+                                                    TextStyle(fontSize: 13,color:Colors.black45,),
+                                                    textDirection:
+                                                    TextDirection.rtl,
+                                                  ),
 
-                                                  userid==items2[position].id? new Container(
-                                                    width: 100,
+//                                                 new Container(
+//                                                    width: 100,
+//
+//                                                    height: 40,
+//                                                    child: new Card(
+//                                                      color: Color(0xffff006064),
+//                                                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20),
+//                                                          side:BorderSide(width: 2,color: Colors.white)),
+//
+//                                                      child: new FlatButton(
+//                                                          child:
+//                                                          new Row(
+//                                                            children: <Widget>[
+//                                                              new Icon(
+//                                                                Icons.edit,
+//                                                                color: Colors.black45,
+//                                                                size: 15,
+//                                                              ),
+//                                                              new Text("تعديل",
+//                                                                style: TextStyle(color: Colors.white,
+//                                                                    fontWeight: FontWeight.bold,
+//                                                                    fontSize: 14),
+//                                                              )
+//                                                            ],
+//
+//                                                          ),
+//                                                          onPressed: () =>
+//                                                              _navigateToEditPeople(
+//                                                                  context, items[position])),
+//                                                    ),
+//                                                    margin: EdgeInsets.only(
+//                                                        right: 150),
+//
+//                                                  ),
 
-                                                    height: 40,
-                                                    child: new Card(
-                                                      color: Color(0xffff006064),
-                                                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20),
-                                                          side:BorderSide(width: 2,color: Colors.white)),
-
-                                                      child: new FlatButton(
-                                                          child:
-                                                          new Row(
-                                                            children: <Widget>[
-                                                              new Icon(
-                                                                Icons.edit,
-                                                                color: Colors.black45,
-                                                                size: 15,
-                                                              ),
-                                                              new Text("تعديل",
-                                                                style: TextStyle(color: Colors.white,
-                                                                    fontWeight: FontWeight.bold,
-                                                                    fontSize: 14),
-                                                              )
-                                                            ],
-
-                                                          ),
-                                                          onPressed: () =>
-                                                              _navigateToEditPeople(
-                                                                  context, items[position])),
-                                                    ),
-                                                    margin: EdgeInsets.only(
-                                                        right: 150),
-
-                                                  ):
-                                                  new Text(' ')
-
+                                                  new Container(
+                                                    height: 10,
+                                                  )
                                                 ],
                                               ),
                                             ),
@@ -302,7 +305,7 @@ class StatePeopleList extends State<PeopleList>{
 
 
 
-  void SearchDepartment(String searchDepartment)  {
+  void SearchMuhafada(String SearchMuhafada)  {
     items.clear();
 
 
@@ -351,7 +354,49 @@ class StatePeopleList extends State<PeopleList>{
     });
   }
 
+  Future<void> Alert() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10),
+              side: new BorderSide(color:Color(0xffff006064) ,
+                  width: 3)
+          ),
+          elevation: 6,
+          title: Text('تصفية حسب المحافظة',textAlign: TextAlign.center,),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                new Container(
+                  height: 50,
+                  child:new DropDown() ,
+                ),
 
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: new Row(
+                children: <Widget>[
+                  new Text('تصفية',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                  new Icon(Icons.filter_list,color: Colors.black,)
+                ],
+              ),
+              onPressed: () {
+                SearchMuhafada(dropdownValue);
+                Navigator.of(context).pop();
+
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 }
 
@@ -386,6 +431,7 @@ class DropDownWidget extends State {
     'المثنى',
     'ميسان',
     'واسط',
+    'البصرة'
 
 
 
